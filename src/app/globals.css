@@ -1,26 +1,462 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Design System - Lossless Casino Premium */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-space-grotesk: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
+  
+  /* Enhanced Casino Color Palette */
+  --background: #0B0D10;
+  --foreground: #E9EEF5;
+  --card: rgba(255,255,255,0.04);
+  --card-foreground: #E9EEF5;
+  --popover: #12151B;
+  --popover-foreground: #E9EEF5;
+  --primary: #00E28A;
+  --primary-foreground: #0B0D10;
+  --secondary: rgba(255,255,255,0.08);
+  --secondary-foreground: #E9EEF5;
+  
+  /* Casino Theme Colors */
+  --casino-green: #00B366;
+  --casino-red: #DC2626;
+  --casino-gold: #F59E0B;
+  --emerald: #00E28A;
+  --crimson: #E03B3B;
+  --gold: #D9B45B;
+  --muted: rgba(255,255,255,0.04);
+  --muted-foreground: #A6B0BF;
+  --accent: #00E28A;
+  --accent-foreground: #0B0D10;
+  --destructive: #E03B3B;
+  --destructive-foreground: #E9EEF5;
+  --border: rgba(255,255,255,0.08);
+  --input: rgba(255,255,255,0.08);
+  --ring: rgba(0,226,138,0.3);
+  --radius: 12px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--border);
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--background);
+  font-family: var(--font-inter);
+  font-feature-settings: "cv11", "ss01";
+  font-variation-settings: "opsz" 32;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* Typography Scale */
+.text-display-xl {
+  font-family: var(--font-space-grotesk);
+  font-size: 4rem; /* 64px */
+  line-height: 4.5rem; /* 72px */
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.text-display-lg {
+  font-family: var(--font-space-grotesk);
+  font-size: 2.5rem; /* 40px */
+  line-height: 3rem; /* 48px */
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.text-display-md {
+  font-family: var(--font-space-grotesk);
+  font-size: 1.5rem; /* 24px */
+  line-height: 1.875rem; /* 30px */
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.text-body {
+  font-family: var(--font-inter);
+  font-size: 1rem; /* 16px */
+  line-height: 1.625rem; /* 26px */
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.text-label {
+  font-family: var(--font-inter);
+  font-size: 0.75rem; /* 12px */
+  line-height: 1rem; /* 16px */
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Component Utilities */
+.panel-glass {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  border-radius: var(--radius-lg);
+}
+
+.separator {
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+}
+
+.chip-pill {
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 16px;
+  background: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%),
+    rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text);
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.chip-pill:hover {
+  background: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%),
+    rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+  box-shadow: 
+    0 6px 16px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.chip-pill svg {
+  width: 16px;
+  height: 16px;
+  color: var(--color-text);
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.chip-pill:hover svg {
+  opacity: 1;
+}
+
+/* Enhanced trust badge variants */
+.trust-badge-audited {
+  border: 1px solid rgba(0, 179, 102, 0.3);
+  background: 
+    linear-gradient(135deg, rgba(0, 179, 102, 0.1) 0%, rgba(0, 179, 102, 0.02) 100%),
+    rgba(0, 0, 0, 0.3);
+}
+
+.trust-badge-audited:hover {
+  border: 1px solid rgba(0, 179, 102, 0.4);
+  box-shadow: 
+    0 6px 16px rgba(0, 179, 102, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.trust-badge-vault {
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  background: 
+    linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0.02) 100%),
+    rgba(0, 0, 0, 0.3);
+}
+
+.trust-badge-vault:hover {
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  box-shadow: 
+    0 6px 16px rgba(245, 158, 11, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.trust-badge-solana {
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  background: 
+    linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(220, 38, 38, 0.02) 100%),
+    rgba(0, 0, 0, 0.3);
+}
+
+.trust-badge-solana:hover {
+  border: 1px solid rgba(220, 38, 38, 0.4);
+  box-shadow: 
+    0 6px 16px rgba(220, 38, 38, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Motion Utilities */
+.motion-enter {
+  animation: motion-enter 0.28s cubic-bezier(0.16,1,0.3,1);
+}
+
+@keyframes motion-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) blur(0);
+  }
+}
+
+.motion-hover {
+  transition: all 0.2s ease-out;
+}
+
+.motion-hover:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-soft);
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus styles */
+.focus-visible:focus-visible {
+  outline: 2px solid var(--color-emerald);
+  outline-offset: 2px;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .text-display-xl {
+    font-size: 2.5rem; /* 40px */
+    line-height: 3rem; /* 48px */
+  }
+  
+  .text-display-lg {
+    font-size: 2rem; /* 32px */
+    line-height: 2.5rem; /* 40px */
+  }
+}
+
+/* Light band effect */
+.light-band {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    -12deg,
+    transparent 40%,
+    rgba(255,255,255,0.08) 50%,
+    transparent 60%
+  );
+  pointer-events: none;
+  animation: light-band-move 8s ease-in-out infinite;
+}
+
+@keyframes light-band-move {
+  0%, 100% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+}
+
+/* Vignette effect */
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    rgba(11, 13, 16, 0.4) 70%,
+    rgba(11, 13, 16, 0.8) 100%
+  );
+  pointer-events: none;
+}
+
+/* Casino-themed enhancements */
+.casino-glow {
+  box-shadow: 
+    0 0 20px rgba(0, 226, 138, 0.1),
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.casino-chip {
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.2) 0%,
+    transparent 50%
+  );
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.casino-chip::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.casino-card {
+  background: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.casino-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+}
+
+/* Enhanced Casino Color Variants */
+.casino-green {
+  background: linear-gradient(135deg, #00B366 0%, #059669 100%);
+  color: white;
+}
+
+.casino-red {
+  background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
+  color: white;
+}
+
+.casino-gold {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  color: #0B0D10;
+}
+
+/* Realistic Casino Chips */
+.casino-chip-green {
+  background: 
+    conic-gradient(from 0deg, 
+      #00B366 0deg, #00B366 30deg,
+      #ffffff 30deg, #ffffff 45deg,
+      #00B366 45deg, #00B366 75deg,
+      #ffffff 75deg, #ffffff 90deg,
+      #00B366 90deg, #00B366 120deg,
+      #ffffff 120deg, #ffffff 135deg,
+      #00B366 135deg, #00B366 165deg,
+      #ffffff 165deg, #ffffff 180deg,
+      #00B366 180deg, #00B366 210deg,
+      #ffffff 210deg, #ffffff 225deg,
+      #00B366 225deg, #00B366 255deg,
+      #ffffff 255deg, #ffffff 270deg,
+      #00B366 270deg, #00B366 300deg,
+      #ffffff 300deg, #ffffff 315deg,
+      #00B366 315deg, #00B366 345deg,
+      #ffffff 345deg, #ffffff 360deg
+    );
+  border: 2px solid #ffffff;
+  box-shadow: 
+    0 0 0 1px #00B366,
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.casino-chip-red {
+  background: 
+    conic-gradient(from 0deg, 
+      #DC2626 0deg, #DC2626 30deg,
+      #ffffff 30deg, #ffffff 45deg,
+      #DC2626 45deg, #DC2626 75deg,
+      #ffffff 75deg, #ffffff 90deg,
+      #DC2626 90deg, #DC2626 120deg,
+      #ffffff 120deg, #ffffff 135deg,
+      #DC2626 135deg, #DC2626 165deg,
+      #ffffff 165deg, #ffffff 180deg,
+      #DC2626 180deg, #DC2626 210deg,
+      #ffffff 210deg, #ffffff 225deg,
+      #DC2626 225deg, #DC2626 255deg,
+      #ffffff 255deg, #ffffff 270deg,
+      #DC2626 270deg, #DC2626 300deg,
+      #ffffff 300deg, #ffffff 315deg,
+      #DC2626 315deg, #DC2626 345deg,
+      #ffffff 345deg, #ffffff 360deg
+    );
+  border: 2px solid #ffffff;
+  box-shadow: 
+    0 0 0 1px #DC2626,
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.casino-chip-gold {
+  background: 
+    conic-gradient(from 0deg, 
+      #F59E0B 0deg, #F59E0B 30deg,
+      #ffffff 30deg, #ffffff 45deg,
+      #F59E0B 45deg, #F59E0B 75deg,
+      #ffffff 75deg, #ffffff 90deg,
+      #F59E0B 90deg, #F59E0B 120deg,
+      #ffffff 120deg, #ffffff 135deg,
+      #F59E0B 135deg, #F59E0B 165deg,
+      #ffffff 165deg, #ffffff 180deg,
+      #F59E0B 180deg, #F59E0B 210deg,
+      #ffffff 210deg, #ffffff 225deg,
+      #F59E0B 225deg, #F59E0B 255deg,
+      #ffffff 255deg, #ffffff 270deg,
+      #F59E0B 270deg, #F59E0B 300deg,
+      #ffffff 300deg, #ffffff 315deg,
+      #F59E0B 315deg, #F59E0B 345deg,
+      #ffffff 345deg, #ffffff 360deg
+    );
+  border: 2px solid #ffffff;
+  box-shadow: 
+    0 0 0 1px #F59E0B,
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.text-casino-green { color: #00B366; }
+.text-casino-red { color: #DC2626; }
+.text-casino-gold { color: #F59E0B; }
+
+.border-casino-green { border-color: rgba(0, 179, 102, 0.3); }
+.border-casino-red { border-color: rgba(220, 38, 38, 0.3); }
+.border-casino-gold { border-color: rgba(245, 158, 11, 0.3); }
