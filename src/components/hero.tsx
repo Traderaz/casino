@@ -47,7 +47,7 @@ export function Hero({ onJoinClick }: HeroProps) {
         
         {/* Main headline */}
         <motion.h1 
-          className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight mb-6"
+          className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight mb-5 -mt-32"
           style={{ fontFamily: 'var(--font-space-grotesk)' }}
           initial={{ opacity: 0, y: 8, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -63,7 +63,7 @@ export function Hero({ onJoinClick }: HeroProps) {
 
         {/* Subtitle */}
         <motion.p 
-          className="text-lg md:text-xl lg:text-2xl text-[#A6B0BF] mb-12 max-w-3xl mx-auto leading-relaxed"
+          className="text-lg md:text-xl lg:text-2xl text-[#A6B0BF] mb-8 max-w-3xl mx-auto leading-relaxed"
           style={{ fontFamily: 'var(--font-inter)' }}
           initial={{ opacity: 0, y: 8, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -74,7 +74,7 @@ export function Hero({ onJoinClick }: HeroProps) {
 
         {/* CTAs */}
         <motion.div 
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10"
           initial={{ opacity: 0, y: 8, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1], delay: 0.7 }}
