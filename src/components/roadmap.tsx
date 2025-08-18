@@ -30,7 +30,7 @@ export function Roadmap() {
   };
 
   return (
-    <section className="relative py-20 lg:py-32 overflow-hidden">
+    <section className="relative py-24 lg:py-40 overflow-hidden">
       {/* Casino Background */}
       <CasinoBackground variant="section" opacity={0.15} />
       
@@ -91,7 +91,7 @@ export function Roadmap() {
               
               {/* Poker table felt arc */}
               <div 
-                className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[800px] h-[400px] rounded-full border-4 border-[#D9B45B]/30 opacity-20"
+                className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[1000px] h-[500px] rounded-full border-4 border-[#D9B45B]/30 opacity-20"
                 style={{
                   background: `
                     radial-gradient(ellipse 100% 50% at 50% 100%, 
@@ -103,7 +103,7 @@ export function Roadmap() {
               />
               
               {/* Cards arrangement in poker hand formation */}
-              <div className="flex justify-center items-center gap-6 pt-8">
+              <div className="flex justify-center items-center gap-12 pt-12">
                 {content.roadmap.phases.map((phase, index) => {
                   const card = pokerCards[index as keyof typeof pokerCards];
                   const isRevealed = revealedCards.includes(index);
@@ -176,7 +176,7 @@ export function Roadmap() {
             </div>
 
             {/* Mobile poker layout */}
-            <div className="lg:hidden space-y-8">
+            <div className="lg:hidden space-y-12">
               {content.roadmap.phases.map((phase, index) => {
                 const card = pokerCards[index as keyof typeof pokerCards];
                 const isRevealed = revealedCards.includes(index);

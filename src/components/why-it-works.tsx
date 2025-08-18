@@ -130,6 +130,12 @@ export function WhyItWorks() {
     setShowJackpot(false);
     setShowingContent(false);
     
+    // Reset to normal spinning symbols immediately
+    const normalResults = whyItWorksSymbols.map(reel => 
+      reel[Math.floor(Math.random() * reel.length)]
+    );
+    setCurrentResults(normalResults);
+    
     // Step 1: Spin for 3 seconds
     setTimeout(() => {
       setIsSpinning(false);
@@ -157,15 +163,7 @@ export function WhyItWorks() {
         setCurrentResults(educationalResults);
         setShowingContent(true);
         
-        // Keep content visible for a while, then reset to normal symbols
-        setTimeout(() => {
-          setShowingContent(false);
-          // Reset to normal slot symbols
-          const normalResults = whyItWorksSymbols.map(reel => 
-            reel[Math.floor(Math.random() * reel.length)]
-          );
-          setCurrentResults(normalResults);
-        }, 8000); // Show content for 8 seconds
+        // Content will stay visible until user spins again
         
       }, 3000); // Wait 3 seconds after jackpot before showing content
       

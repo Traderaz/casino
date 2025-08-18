@@ -90,10 +90,10 @@ export function Features() {
             </p>
             
             {/* Deal Controls */}
-            <div className="flex items-center justify-center gap-6">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
               {/* Deal Status */}
               <motion.div 
-                className="inline-flex items-center gap-4 px-6 py-3 rounded-full border-2 border-[#D9B45B]/30 bg-gradient-to-r from-[#D9B45B]/10 to-[#D9B45B]/5 backdrop-blur-sm"
+                className="inline-flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-2 sm:py-3 rounded-full border-2 border-[#D9B45B]/30 bg-gradient-to-r from-[#D9B45B]/10 to-[#D9B45B]/5 backdrop-blur-sm"
                 animate={{ 
                   opacity: isDealing ? [1, 0.7, 1] : 1,
                   scale: isDealing ? [1, 1.05, 1] : 1
@@ -107,7 +107,7 @@ export function Features() {
                   {isDealing ? '🃏' : '🎯'}
                 </div>
                 <div className="text-center">
-                  <div className="text-[#D9B45B] font-bold text-sm">
+                  <div className="text-[#D9B45B] font-bold text-xs sm:text-sm">
                     {isDealing ? 'DEALING...' : 'READY TO DEAL'}
                   </div>
                   <div className="text-[#A6B0BF] text-xs">
@@ -122,7 +122,7 @@ export function Features() {
               <motion.button
                 onClick={handleDeal}
                 disabled={isDealing}
-                className="px-8 py-4 bg-gradient-to-r from-[#D9B45B] to-[#B8860B] rounded-2xl text-black font-bold text-lg shadow-2xl relative overflow-hidden"
+                className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-[#D9B45B] to-[#B8860B] rounded-xl sm:rounded-2xl text-black font-bold text-base sm:text-lg shadow-2xl relative overflow-hidden"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >

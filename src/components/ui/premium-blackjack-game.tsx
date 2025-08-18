@@ -78,7 +78,7 @@ export const PremiumBlackjackGame = memo(function PremiumBlackjackGame({
       <div className="relative w-full max-w-6xl">
         {/* Table Felt */}
         <div 
-          className="w-full h-[32rem] rounded-3xl relative overflow-hidden"
+          className="w-full h-[20rem] sm:h-[24rem] md:h-[28rem] lg:h-[32rem] rounded-2xl sm:rounded-3xl relative overflow-hidden"
           style={{
             background: `
               radial-gradient(ellipse 80% 60% at 50% 50%, 
@@ -96,22 +96,22 @@ export const PremiumBlackjackGame = memo(function PremiumBlackjackGame({
           }}
         >
           {/* Table Border */}
-          <div className="absolute inset-4 rounded-2xl border-4 border-[#D9B45B] opacity-30" />
+          <div className="absolute inset-2 sm:inset-4 rounded-xl sm:rounded-2xl border-2 sm:border-4 border-[#D9B45B] opacity-30" />
           
           {/* Dealer Area Label */}
-          <div className="absolute top-8 left-1/2 transform -translate-x-1/2">
-            <div className="px-6 py-2 bg-black/50 rounded-full border border-[#D9B45B]/50 backdrop-blur-sm">
-              <span className="text-[#D9B45B] font-bold text-sm">LOSSLESS CASINO</span>
+          <div className="absolute top-4 sm:top-8 left-1/2 transform -translate-x-1/2">
+            <div className="px-4 sm:px-6 py-1.5 sm:py-2 bg-black/50 rounded-full border border-[#D9B45B]/50 backdrop-blur-sm">
+              <span className="text-[#D9B45B] font-bold text-xs sm:text-sm">LOSSLESS CASINO</span>
             </div>
           </div>
 
           {/* Card Area */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="flex gap-8 items-end">
+            <div className="flex gap-3 sm:gap-6 md:gap-8 items-end">
               {/* Deck Position */}
               <div className="relative">
                 <motion.div
-                  className="w-32 h-48 rounded-xl border-2 border-[#D9B45B] bg-gradient-to-b from-[#1a1d29] to-[#0f1117] shadow-2xl"
+                  className="w-20 h-28 sm:w-24 sm:h-36 md:w-28 md:h-42 lg:w-32 lg:h-48 rounded-lg sm:rounded-xl border-2 border-[#D9B45B] bg-gradient-to-b from-[#1a1d29] to-[#0f1117] shadow-2xl"
                   animate={{ 
                     scale: isDealing ? [1, 1.05, 1] : 1 
                   }}
@@ -120,8 +120,8 @@ export const PremiumBlackjackGame = memo(function PremiumBlackjackGame({
                     repeat: isDealing ? Infinity : 0 
                   }}
                 >
-                  <div className="absolute inset-4 flex items-center justify-center">
-                    <div className="text-3xl text-[#D9B45B]/60">🎰</div>
+                  <div className="absolute inset-2 sm:inset-3 md:inset-4 flex items-center justify-center">
+                    <div className="text-lg sm:text-2xl md:text-3xl text-[#D9B45B]/60">🎰</div>
                   </div>
                 </motion.div>
                 <div className="text-center mt-2">
@@ -130,7 +130,7 @@ export const PremiumBlackjackGame = memo(function PremiumBlackjackGame({
               </div>
 
               {/* Dealt Cards */}
-              <div className="flex gap-8 items-end min-h-[300px]">
+              <div className="flex gap-2 sm:gap-4 md:gap-6 lg:gap-8 items-end min-h-[150px] sm:min-h-[200px] md:min-h-[250px] lg:min-h-[300px]">
                 <AnimatePresence>
                   {dealtCards.map((card, index) => (
                     <motion.div
@@ -146,7 +146,10 @@ export const PremiumBlackjackGame = memo(function PremiumBlackjackGame({
                     >
                       {/* Card */}
                       <motion.div
-                        className={`${dealtCards.length === cards.length && !isDealing ? 'w-48 h-72' : 'w-32 h-48'} rounded-xl shadow-2xl cursor-pointer transition-all duration-1000`}
+                        className={`${dealtCards.length === cards.length && !isDealing 
+                          ? 'w-32 h-48 sm:w-36 sm:h-54 md:w-40 md:h-60 lg:w-48 lg:h-72' 
+                          : 'w-20 h-28 sm:w-24 sm:h-36 md:w-28 md:h-42 lg:w-32 lg:h-48'} 
+                        rounded-lg sm:rounded-xl shadow-2xl cursor-pointer transition-all duration-1000`}
                         whileHover={{ y: -10, scale: 1.05 }}
                         whileTap={{ scale: 0.98 }}
                         style={{ perspective: '1000px' }}
@@ -180,36 +183,45 @@ export const PremiumBlackjackGame = memo(function PremiumBlackjackGame({
                               transform: 'rotateY(0deg)'
                             }}
                           >
-                            <div className="relative w-full h-full p-4">
+                            <div className="relative w-full h-full p-2 sm:p-3 md:p-4">
                               {/* Top Left */}
-                              <div className="absolute top-3 left-3 text-center">
-                                <div className={`text-xl font-bold ${card.color}`}>
+                              <div className="absolute top-1 left-1 sm:top-2 sm:left-2 md:top-3 md:left-3 text-center">
+                                <div className={`text-sm sm:text-lg md:text-xl font-bold ${card.color}`}>
                                   {card.rank}
                                 </div>
-                                <div className={`text-lg ${card.color}`}>
+                                <div className={`text-xs sm:text-base md:text-lg ${card.color}`}>
                                   {card.suit}
                                 </div>
                               </div>
                               
                               {/* Bottom Right (rotated) */}
-                              <div className="absolute bottom-3 right-3 text-center transform rotate-180">
-                                <div className={`text-xl font-bold ${card.color}`}>
+                              <div className="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 md:bottom-3 md:right-3 text-center transform rotate-180">
+                                <div className={`text-sm sm:text-lg md:text-xl font-bold ${card.color}`}>
                                   {card.rank}
                                 </div>
-                                <div className={`text-lg ${card.color}`}>
+                                <div className={`text-xs sm:text-base md:text-lg ${card.color}`}>
                                   {card.suit}
                                 </div>
                               </div>
 
                               {/* Center Content */}
-                              <div className="flex flex-col items-center justify-center h-full text-center px-3">
-                                <div className={`${dealtCards.length === cards.length && !isDealing ? 'text-5xl mb-4' : 'text-4xl mb-3'} ${card.color} transition-all duration-1000`}>
+                              <div className="flex flex-col items-center justify-center h-full text-center px-1 sm:px-2 md:px-3">
+                                <div className={`${dealtCards.length === cards.length && !isDealing 
+                                  ? 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-2 sm:mb-3 md:mb-4' 
+                                  : 'text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-1 sm:mb-2 md:mb-3'} 
+                                  ${card.color} transition-all duration-1000`}>
                                   {card.suit}
                                 </div>
-                                <h3 className={`${dealtCards.length === cards.length && !isDealing ? 'text-lg mb-4' : 'text-sm mb-2'} font-bold text-gray-800 leading-tight transition-all duration-1000`}>
+                                <h3 className={`${dealtCards.length === cards.length && !isDealing 
+                                  ? 'text-xs sm:text-sm md:text-base lg:text-lg mb-2 sm:mb-3 md:mb-4' 
+                                  : 'text-xs sm:text-sm mb-1 sm:mb-2'} 
+                                  font-bold text-gray-800 leading-tight transition-all duration-1000`}>
                                   {card.title}
                                 </h3>
-                                <p className={`${dealtCards.length === cards.length && !isDealing ? 'text-sm' : 'text-xs'} text-gray-600 leading-relaxed transition-all duration-1000`}>
+                                <p className={`${dealtCards.length === cards.length && !isDealing 
+                                  ? 'text-xs sm:text-sm' 
+                                  : 'text-xs'} 
+                                  text-gray-600 leading-relaxed transition-all duration-1000`}>
                                   {dealtCards.length === cards.length && !isDealing ? card.description : card.description.split('.')[0] + '.'}
                                 </p>
                               </div>
@@ -237,16 +249,16 @@ export const PremiumBlackjackGame = memo(function PremiumBlackjackGame({
           <AnimatePresence>
             {dealtCards.length > 0 && (
               <motion.div 
-                className="absolute bottom-8 right-8"
+                className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 md:bottom-8 md:right-8"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6 }}
               >
-                <div className="px-6 py-3 bg-black/70 rounded-2xl border-2 border-[#D9B45B] backdrop-blur-sm">
+                <div className="px-3 py-2 sm:px-4 sm:py-2.5 md:px-6 md:py-3 bg-black/70 rounded-xl sm:rounded-2xl border-2 border-[#D9B45B] backdrop-blur-sm">
                   <div className="text-center">
                     <div className="text-[#D9B45B] text-xs font-semibold mb-1">TOTAL</div>
                     <motion.div 
-                      className="text-2xl font-bold text-white"
+                      className="text-lg sm:text-xl md:text-2xl font-bold text-white"
                       animate={{ 
                         scale: currentTotal === 21 ? [1, 1.2, 1] : 1,
                         color: currentTotal === 21 ? ['#ffffff', '#00E28A', '#ffffff'] : '#ffffff'
@@ -279,19 +291,19 @@ export const PremiumBlackjackGame = memo(function PremiumBlackjackGame({
       <AnimatePresence>
         {dealtCards.length === cards.length && !isDealing && (
           <motion.div 
-            className="mt-8 text-center"
+            className="mt-4 sm:mt-6 md:mt-8 text-center px-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1 }}
           >
             <motion.div 
-              className="text-2xl font-bold text-[#00E28A] mb-4"
+              className="text-lg sm:text-xl md:text-2xl font-bold text-[#00E28A] mb-2 sm:mb-3 md:mb-4"
               animate={{ scale: [1, 1.02, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
               🎊 Perfect Hand - All Innovations Revealed! 🎊
             </motion.div>
-            <p className="text-[#A6B0BF] text-lg">
+            <p className="text-[#A6B0BF] text-sm sm:text-base md:text-lg">
               Each card now shows the complete innovation details
             </p>
           </motion.div>

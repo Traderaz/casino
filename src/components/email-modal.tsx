@@ -142,7 +142,7 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
                         type="text"
                         required
                         value={formData.name}
-                        onChange={(e) => handleInputChange('name', e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('name', e.target.value)}
                         className="pl-10 h-12 bg-white/4 border-white/8 text-[#E9EEF5] placeholder:text-[#A6B0BF] focus:border-[#00E28A]/50 focus:ring-[#00E28A]/20"
                         placeholder="Your name"
                       />
@@ -161,7 +161,7 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
                         type="email"
                         required
                         value={formData.email}
-                        onChange={(e) => handleInputChange('email', e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('email', e.target.value)}
                         className="pl-10 h-12 bg-white/4 border-white/8 text-[#E9EEF5] placeholder:text-[#A6B0BF] focus:border-[#00E28A]/50 focus:ring-[#00E28A]/20"
                         placeholder="your@email.com"
                       />
@@ -180,7 +180,7 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
                         id="modal-wallet"
                         type="text"
                         value={formData.wallet}
-                        onChange={(e) => handleInputChange('wallet', e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('wallet', e.target.value)}
                         className="pl-10 h-12 bg-white/4 border-white/8 text-[#E9EEF5] placeholder:text-[#A6B0BF] focus:border-[#00E28A]/50 focus:ring-[#00E28A]/20"
                         placeholder="Optional"
                       />
