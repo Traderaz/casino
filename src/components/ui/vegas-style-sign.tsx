@@ -44,6 +44,8 @@ export function VegasStyleSign() {
             src="/lossless casino.png"
             alt="Welcome to Lossless Casino"
             fill
+            sizes="1050px"
+            priority
             className="object-contain"
             style={{
               filter: 'brightness(1.1) contrast(1.1)'

@@ -14,7 +14,9 @@ interface CasinoBackgroundProps {
 // Deterministic random function for consistent SSR/client rendering
 const seededRandom = (seed: number) => {
   const x = Math.sin(seed) * 10000;
-  return x - Math.floor(x);
+  const result = x - Math.floor(x);
+  // Round to 4 decimal places to ensure consistency
+  return Math.round(result * 10000) / 10000;
 };
 
 // Memoized background suits generation for better performance
@@ -64,8 +66,8 @@ export const CasinoBackground = memo(function CasinoBackground({
               key={`casino-chip-${i}`}
               className="absolute will-change-transform"
               style={{
-                left: `${(seededRandom(i * 3.7) * 85 + 7.5)}%`,
-                top: `${(seededRandom(i * 2.1) * 75 + 12.5)}%`,
+                left: `${Math.round((seededRandom(i * 3.7) * 85 + 7.5) * 100) / 100}%`,
+                top: `${Math.round((seededRandom(i * 2.1) * 75 + 12.5) * 100) / 100}%`,
                 opacity: 0.7
               }}
               animate={{
@@ -111,8 +113,8 @@ export const CasinoBackground = memo(function CasinoBackground({
               key={`casino-dice-${i}`}
               className="absolute will-change-transform"
               style={{
-                left: `${(seededRandom(i * 7.1) * 80 + 10)}%`,
-                top: `${(seededRandom(i * 3.9) * 70 + 15)}%`,
+                left: `${Math.round((seededRandom(i * 7.1) * 80 + 10) * 100) / 100}%`,
+                top: `${Math.round((seededRandom(i * 3.9) * 70 + 15) * 100) / 100}%`,
                 opacity: 0.6
               }}
               animate={{

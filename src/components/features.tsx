@@ -1,9 +1,10 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useState } from "react";
 import { content } from "@/lib/content";
 import { CasinoBackground } from "@/components/ui/casino-background";
+import { PremiumBlackjackGame, BlackjackCard } from "@/components/ui/premium-blackjack-game";
 
 const featureIcons = {
   spark: () => (
@@ -39,30 +40,28 @@ const featureIcons = {
 };
 
 export function Features() {
-  const [flippedCards, setFlippedCards] = useState<number[]>([]);
+  const [isDealing, setIsDealing] = useState(false);
 
-  const flipCard = (index: number) => {
-    setFlippedCards(prev => 
-      prev.includes(index) 
-        ? prev.filter(i => i !== index)
-        : [...prev, index]
-    );
+  // Transform features into blackjack cards that add up to 21
+  const blackjackCards: BlackjackCard[] = content.features.map((feature, index) => ({
+    id: index,
+    title: feature.title,
+    description: feature.description,
+    suit: index === 0 ? '♠' : index === 1 ? '♥' : '♦', // Spades, Hearts, Diamonds
+    rank: index === 0 ? 'A' : index === 1 ? 'K' : 'Q', // Ace, King, Queen
+    value: index === 0 ? 11 : index === 1 ? 5 : 5, // 11 + 5 + 5 = 21 (Blackjack!)
+    color: index === 0 ? 'text-gray-800' : index === 1 ? 'text-red-600' : 'text-red-600'
+  }));
+
+  const handleDeal = () => {
+    if (isDealing) return;
+    setIsDealing(true);
+    
+    // Reset dealing state after all cards are dealt
+    setTimeout(() => {
+      setIsDealing(false);
+    }, blackjackCards.length * 1500 + 2000); // Total dealing time + buffer
   };
-
-  const flipAllCards = () => {
-    if (flippedCards.length === 3) {
-      setFlippedCards([]);
-    } else {
-      setFlippedCards([0, 1, 2]);
-    }
-  };
-
-  // Card suits and colors for each feature
-  const cardData = [
-    { suit: '♠', color: 'text-casino-green', rank: 'A' },
-    { suit: '♦', color: 'text-casino-red', rank: 'K' }, 
-    { suit: '♥', color: 'text-casino-red', rank: 'Q' }
-  ];
 
   return (
     <section className="relative py-20 lg:py-32 overflow-hidden">
@@ -84,130 +83,84 @@ export function Features() {
             transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
           >
             <h2 className="text-display-lg text-[#E9EEF5] mb-4">
-              What it <span className="text-casino-gold">is</span>
+              What it <span className="text-[#D9B45B]">is</span>
             </h2>
             <p className="text-body text-[#A6B0BF] max-w-2xl mx-auto mb-8">
-              Three core innovations that make <span className="text-casino-green">lossless gaming</span> possible
+              Watch the dealer reveal each innovation card to build the perfect hand - three cards that add up to <span className="text-[#00E28A]">21 (Blackjack!)</span>
             </p>
-            <button
-              onClick={flipAllCards}
-              className="px-6 py-3 bg-gradient-to-r from-casino-green to-emerald-600 rounded-xl text-white font-semibold hover:scale-105 transition-all duration-200 shadow-lg"
-            >
-              {flippedCards.length === 3 ? 'Hide Cards' : 'Reveal Cards'}
-            </button>
+            
+            {/* Deal Controls */}
+            <div className="flex items-center justify-center gap-6">
+              {/* Deal Status */}
+              <motion.div 
+                className="inline-flex items-center gap-4 px-6 py-3 rounded-full border-2 border-[#D9B45B]/30 bg-gradient-to-r from-[#D9B45B]/10 to-[#D9B45B]/5 backdrop-blur-sm"
+                animate={{ 
+                  opacity: isDealing ? [1, 0.7, 1] : 1,
+                  scale: isDealing ? [1, 1.05, 1] : 1
+                }}
+                transition={{ 
+                  duration: 0.8, 
+                  repeat: isDealing ? Infinity : 0 
+                }}
+              >
+                <div className="text-2xl">
+                  {isDealing ? '🃏' : '🎯'}
+                </div>
+                <div className="text-center">
+                  <div className="text-[#D9B45B] font-bold text-sm">
+                    {isDealing ? 'DEALING...' : 'READY TO DEAL'}
+                  </div>
+                  <div className="text-[#A6B0BF] text-xs">
+                    {isDealing ? 'Cards in motion' : 'Discover innovations'}
+                  </div>
+                </div>
+                <div className="text-2xl">
+                  {isDealing ? '🃏' : '💎'}
+                </div>
+              </motion.div>
+            
+              <motion.button
+                onClick={handleDeal}
+                disabled={isDealing}
+                className="px-8 py-4 bg-gradient-to-r from-[#D9B45B] to-[#B8860B] rounded-2xl text-black font-bold text-lg shadow-2xl relative overflow-hidden"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {/* Button shine effect */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                  animate={{ x: isDealing ? [-100, 300] : -100 }}
+                  transition={{ duration: 1.5, repeat: isDealing ? Infinity : 0 }}
+                />
+                
+                <div className="relative flex items-center gap-3">
+                  <motion.div
+                    animate={{ rotate: isDealing ? 360 : 0 }}
+                    transition={{ duration: 0.5, repeat: isDealing ? Infinity : 0, ease: "linear" }}
+                  >
+                    🃏
+                  </motion.div>
+                  <span>{isDealing ? "DEALING..." : "DEAL THE CARDS"}</span>
+                </div>
+              </motion.button>
+            </div>
           </motion.div>
 
-          {/* Playing Cards */}
-          <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
-            {content.features.map((feature, index) => {
-              const card = cardData[index];
-              const isFlipped = flippedCards.includes(index);
-              
-              return (
-                <motion.div
-                  key={index}
-                  className="relative h-80 cursor-pointer"
-                  style={{ perspective: '1000px' }}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ 
-                    duration: 0.6, 
-                    ease: "easeOut",
-                    delay: index * 0.2
-                  }}
-                  onClick={() => flipCard(index)}
-                  whileHover={{ scale: 1.02 }}
-                >
-                  {/* Card Container */}
-                  <motion.div
-                    className="relative w-full h-full"
-                    style={{ transformStyle: 'preserve-3d' }}
-                    animate={{ rotateY: isFlipped ? 180 : 0 }}
-                    transition={{ duration: 0.6, ease: "easeInOut" }}
-                  >
-                    {/* Card Back */}
-                    <div 
-                      className="absolute inset-0 w-full h-full rounded-2xl border-2 border-white/20 shadow-2xl"
-                      style={{ 
-                        backfaceVisibility: 'hidden',
-                        background: 'linear-gradient(135deg, #1a1d29 0%, #0f1117 100%)'
-                      }}
-                    >
-                      <div className="relative w-full h-full p-6 flex flex-col items-center justify-center">
-                        {/* Card Back Pattern */}
-                        <div className="absolute inset-4 border-2 border-casino-gold/30 rounded-xl"></div>
-                        <div className="absolute inset-6 border border-casino-gold/20 rounded-lg"></div>
-                        
-                        {/* Center Logo */}
-                        <div className="text-center">
-                          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-casino-gold to-yellow-600 flex items-center justify-center shadow-lg">
-                            <span className="text-2xl font-bold text-black">LC</span>
-                          </div>
-                          <p className="text-casino-gold text-sm font-semibold tracking-wider">
-                            LOSSLESS CASINO
-                          </p>
-                        </div>
-                        
-                        {/* Corner decorations */}
-                        <div className="absolute top-4 left-4 text-casino-gold/40 text-xs">♠</div>
-                        <div className="absolute top-4 right-4 text-casino-red/40 text-xs">♥</div>
-                        <div className="absolute bottom-4 left-4 text-casino-red/40 text-xs">♦</div>
-                        <div className="absolute bottom-4 right-4 text-casino-green/40 text-xs">♣</div>
-                      </div>
-                    </div>
-
-                    {/* Card Front */}
-                    <div 
-                      className="absolute inset-0 w-full h-full bg-white rounded-2xl border-2 border-gray-300 shadow-2xl"
-                      style={{ 
-                        backfaceVisibility: 'hidden',
-                        transform: 'rotateY(180deg)'
-                      }}
-                    >
-                      <div className="relative w-full h-full p-6">
-                        {/* Card Rank and Suit - Top Left */}
-                        <div className="absolute top-4 left-4 text-center">
-                          <div className={`text-2xl font-bold ${card.color}`}>
-                            {card.rank}
-                          </div>
-                          <div className={`text-xl ${card.color}`}>
-                            {card.suit}
-                          </div>
-                        </div>
-                        
-                        {/* Card Rank and Suit - Bottom Right (rotated) */}
-                        <div className="absolute bottom-4 right-4 text-center transform rotate-180">
-                          <div className={`text-2xl font-bold ${card.color}`}>
-                            {card.rank}
-                          </div>
-                          <div className={`text-xl ${card.color}`}>
-                            {card.suit}
-                          </div>
-                        </div>
-
-                        {/* Main Content */}
-                        <div className="flex flex-col items-center justify-center h-full text-center px-4">
-                          {/* Large center suit */}
-                          <div className={`text-6xl mb-4 ${card.color}`}>
-                            {card.suit}
-                          </div>
-                          
-                          {/* Feature content */}
-                          <h3 className="text-lg font-bold text-gray-800 mb-3">
-                            {feature.title}
-                          </h3>
-                          <p className="text-sm text-gray-600 leading-relaxed">
-                            {feature.description}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </motion.div>
-              );
-            })}
-          </div>
+          {/* Premium Blackjack Game */}
+          <motion.div
+            className="flex justify-center"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <PremiumBlackjackGame
+              cards={blackjackCards}
+              isDealing={isDealing}
+              onDeal={handleDeal}
+              className="w-full"
+            />
+          </motion.div>
         </div>
       </div>
     </section>

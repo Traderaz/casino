@@ -2,44 +2,174 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { Check } from "lucide-react";
 import { CasinoBackground } from "@/components/ui/casino-background";
+import { PremiumSlotMachine, SlotSymbol } from "@/components/ui/premium-slot-machine";
 
+// Why It Works - Real content that cycles through the slot machine
 const whyItWorksPoints = [
-  "Your principal earns steady yield in blue-chip protocols",
-  "Only the yield enters high-risk jackpot games", 
-  "Win big or lose small—principal stays protected",
-  "Automated yield farming maximizes your returns",
-  "Smart contracts ensure transparent operations",
-  "Insurance fund protects against protocol risks",
-  "Multiple yield strategies diversify your exposure",
-  "Real-time monitoring of all positions"
+  {
+    title: "Lossless Entry",
+    icon: "🛡️",
+    description: "Users never lose their principal — only yield is risked. Removes the biggest psychological barrier: fear of losing your stack."
+  },
+  {
+    title: "Constant Jackpot Flow", 
+    icon: "🔄",
+    description: "Unlike traditional casinos, jackpots refill automatically from yield farming. No need to mint endless tokens to fund prizes."
+  },
+  {
+    title: "Positive-Sum Casino",
+    icon: "📈", 
+    description: "Normal casinos are negative-sum (house always wins). Here, the 'house' grows alongside players via fees + treasury scaling."
+  },
+  {
+    title: "Treasury Growth",
+    icon: "🏛️",
+    description: "Treasury compounds yield, increasing jackpot size + runway. The bigger the treasury, the more attractive jackpots become."
+  },
+  {
+    title: "Degenerate Upside",
+    icon: "🎰",
+    description: "Players still get the dopamine of slots/roulette/jackpots. But their capital base is untouched — 'degen without regret.'"
+  },
+  {
+    title: "Sticky TVL",
+    icon: "🔒",
+    description: "Once funds are deposited, there's little reason to withdraw. Users are constantly eligible for jackpots as long as funds stay locked."
+  },
+  {
+    title: "Infinite Narratives",
+    icon: "🎭",
+    description: "'The first casino you can't lose at.' 'House edge? No — house flywheel.' This storytelling fuels community + meme virality."
+  },
+  {
+    title: "Cross-Chain Growth",
+    icon: "🌐",
+    description: "Start on Solana. Later → expand to ETH L2s, Sui, Aptos. Each chain = new liquidity base, new jackpot pools."
+  },
+  {
+    title: "Insurance Vault",
+    icon: "🛡️",
+    description: "Treasury-backed protection fund ensures solvency. Proves seriousness to investors + degens alike. 'Safer than Vegas, powered by DeFi.'"
+  },
+  {
+    title: "Addictive Yet Safe",
+    icon: "♻️",
+    description: "Casinos thrive on addictive gameplay. Here, you get the same loop without liquidation risk. Users feel the high, keep their stack."
+  }
+];
+
+// Normal slot machine symbols for spinning and jackpot
+const whyItWorksSymbols: SlotSymbol[][] = [
+  // Reel 1 - Security & Protection symbols
+  [
+    { type: 'chip', color: 'blue', value: '1' },
+    { type: 'icon', icon: '🛡️' },
+    { type: 'dice', value: '1' },
+    { type: 'chip', color: 'green', value: '2' },
+    { type: 'icon', icon: '🔒' },
+    { type: 'dice', value: '2' },
+    { type: 'icon', icon: '💎' },
+  ],
+  // Reel 2 - Yield & Returns symbols
+  [
+    { type: 'chip', color: 'gold', value: '3' },
+    { type: 'icon', icon: '📈' },
+    { type: 'dice', value: '3' },
+    { type: 'chip', color: 'purple', value: '4' },
+    { type: 'icon', icon: '⚡' },
+    { type: 'dice', value: '4' },
+    { type: 'icon', icon: '🎯' },
+  ],
+  // Reel 3 - Games & Risk symbols
+  [
+    { type: 'chip', color: 'red', value: '5' },
+    { type: 'icon', icon: '🎰' },
+    { type: 'dice', value: '5' },
+    { type: 'chip', color: 'blue', value: '6' },
+    { type: 'icon', icon: '🎲' },
+    { type: 'dice', value: '1' },
+    { type: 'icon', icon: '🏆' },
+  ],
+  // Reel 4 - Technology & Trust symbols
+  [
+    { type: 'chip', color: 'green', value: '1' },
+    { type: 'icon', icon: '🤖' },
+    { type: 'dice', value: '2' },
+    { type: 'chip', color: 'gold', value: '2' },
+    { type: 'icon', icon: '🔍' },
+    { type: 'dice', value: '3' },
+    { type: 'icon', icon: '📊' },
+  ]
+];
+
+// Jackpot combination - when all align
+const jackpotResults: SlotSymbol[] = [
+  { type: 'icon', icon: '👑', text: 'LOSSLESS', isJackpot: true },
+  { type: 'icon', icon: '🎰', text: 'CASINO', isJackpot: true },
+  { type: 'icon', icon: '💎', text: 'JACKPOT', isJackpot: true },
+  { type: 'icon', icon: '🏆', text: 'WINNER', isJackpot: true }
 ];
 
 export function WhyItWorks() {
   const [isSpinning, setIsSpinning] = useState(false);
-  const [currentPoints, setCurrentPoints] = useState([
-    whyItWorksPoints[0],
-    whyItWorksPoints[1],
-    whyItWorksPoints[2]
+  const [spinCount, setSpinCount] = useState(0);
+  const [currentResults, setCurrentResults] = useState<SlotSymbol[]>([
+    whyItWorksSymbols[0][0],
+    whyItWorksSymbols[1][0], 
+    whyItWorksSymbols[2][0],
+    whyItWorksSymbols[3][0]
   ]);
-  const [leverPulled, setLeverPulled] = useState(false);
+  const [showJackpot, setShowJackpot] = useState(false);
+  const [showingContent, setShowingContent] = useState(false);
 
-  const pullLever = () => {
+  const handleSpin = () => {
     if (isSpinning) return;
     
     setIsSpinning(true);
-    setLeverPulled(true);
+    setShowJackpot(false);
+    setShowingContent(false);
     
-    // Animate lever back
-    setTimeout(() => setLeverPulled(false), 200);
-    
-    // Spin for 2.5 seconds then show new results
+    // Step 1: Spin for 3 seconds
     setTimeout(() => {
-      const shuffled = [...whyItWorksPoints].sort(() => Math.random() - 0.5);
-      setCurrentPoints(shuffled.slice(0, 3));
       setIsSpinning(false);
-    }, 2500);
+      
+      // Step 2: Always show jackpot first
+      setCurrentResults(jackpotResults);
+      setShowJackpot(true);
+      
+      // Step 3: After 3 seconds of jackpot celebration, show the educational content
+      setTimeout(() => {
+        const newSpinCount = spinCount + 1;
+        setSpinCount(newSpinCount);
+        
+        // Generate 4 unique "Why It Works" points for educational content
+        const shuffledPoints = [...whyItWorksPoints].sort(() => Math.random() - 0.5);
+        const selectedPoints = shuffledPoints.slice(0, 4);
+        const educationalResults = selectedPoints.map(point => ({ 
+          type: 'text' as const, 
+          icon: point.icon, 
+          text: point.title,
+          description: point.description
+        }));
+        
+        setShowJackpot(false);
+        setCurrentResults(educationalResults);
+        setShowingContent(true);
+        
+        // Keep content visible for a while, then reset to normal symbols
+        setTimeout(() => {
+          setShowingContent(false);
+          // Reset to normal slot symbols
+          const normalResults = whyItWorksSymbols.map(reel => 
+            reel[Math.floor(Math.random() * reel.length)]
+          );
+          setCurrentResults(normalResults);
+        }, 8000); // Show content for 8 seconds
+        
+      }, 3000); // Wait 3 seconds after jackpot before showing content
+      
+    }, 3000); // Initial spin duration
   };
 
   return (
@@ -60,237 +190,120 @@ export function WhyItWorks() {
           transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
         >
           <h2 className="text-display-lg text-[#E9EEF5] mb-4">
-            Why it <span className="text-casino-gold">works</span>
+            Why it <span className="text-[#D9B45B]">works</span>
           </h2>
           <p className="text-body text-[#A6B0BF] max-w-2xl mx-auto mb-8">
-            Pull the lever to discover different reasons why <span className="text-casino-green">lossless gaming</span> is revolutionary
+            Spin the premium 4-reel slot machine to discover why <span className="text-[#00E28A]">lossless gaming</span> is revolutionary
           </p>
+          
+          {/* Status indicator */}
+          <motion.div 
+            className="inline-flex items-center gap-4 px-6 py-3 rounded-full border-2 border-[#D9B45B]/30 bg-gradient-to-r from-[#D9B45B]/10 to-[#D9B45B]/5 backdrop-blur-sm"
+            animate={{ 
+              opacity: showJackpot ? [1, 0.7, 1] : 1,
+              scale: showJackpot ? [1, 1.05, 1] : 1
+            }}
+            transition={{ 
+              duration: 0.8, 
+              repeat: showJackpot ? Infinity : 0 
+            }}
+          >
+            <div className="text-2xl">
+              {isSpinning ? '🎰' : showJackpot ? '🏆' : showingContent ? '📚' : '🎲'}
+            </div>
+            <div className="text-center">
+              <div className="text-[#D9B45B] font-bold text-sm">
+                {isSpinning ? 'SPINNING...' : 
+                 showJackpot ? 'JACKPOT!' : 
+                 showingContent ? 'LEARNING!' : 
+                 'READY TO WIN'}
+              </div>
+              <div className="text-[#A6B0BF] text-xs">
+                {isSpinning ? 'Reels in motion' : 
+                 showJackpot ? 'Celebrating victory' : 
+                 showingContent ? 'Showing benefits' : 
+                 'Every spin wins!'}
+              </div>
+            </div>
+            <div className="text-2xl">
+              {isSpinning ? '🎰' : showJackpot ? '🏆' : showingContent ? '📚' : '💎'}
+            </div>
+          </motion.div>
         </motion.div>
 
-        {/* Slot Machine */}
-                <motion.div
-          className="max-w-6xl mx-auto"
+        {/* Premium 4-Reel Slot Machine */}
+        <motion.div
+          className="max-w-7xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <div className="relative">
-            {/* Professional Slot Machine Interface */}
-            <div className="relative bg-gradient-to-b from-[#12151B] to-[#0B0D10] rounded-2xl border border-white/10 backdrop-blur-sm shadow-2xl overflow-hidden">
-
-              {/* Professional Slot Reels */}
-              <div className="p-12">
-                <div className="grid grid-cols-3 gap-8">
-                  {[0, 1, 2].map((reelIndex) => (
-                    <div key={reelIndex} className="relative">
-                      {/* Reel Container */}
-                      <div className="bg-black/40 rounded-xl border border-white/10 h-96 overflow-hidden relative backdrop-blur-sm">
-                        {/* Reel Content */}
-                        <div className="absolute inset-0 flex flex-col justify-center">
-                          <AnimatePresence mode="wait">
-                            {isSpinning ? (
-                              <motion.div
-                                key={`spinning-${reelIndex}`}
-                                className="flex flex-col"
-                                initial={{ y: 0 }}
-                                animate={{ y: [-800, 0] }}
-                                transition={{ 
-                                  duration: 0.08, 
-                                  repeat: Infinity,
-                                  ease: "linear"
-                                }}
-                              >
-                                {/* Show spinning symbols */}
-                                {Array.from({ length: 15 }).map((_, i) => {
-                                  const symbols = ['♦', '♠', '♥', '♣', '7'];
-                                  const symbol = symbols[i % symbols.length];
-                                  const isRed = symbol === '♥' || symbol === '♦';
-                                  const isGold = symbol === '7';
-                                  
-                                  return (
-                                    <div key={i} className="h-28 flex items-center justify-center">
-                                      <span className={`text-6xl font-bold ${
-                                        isGold ? 'text-casino-gold' : 
-                                        isRed ? 'text-casino-red' : 'text-casino-green'
-                                      }`} style={{ 
-                                        textShadow: '0 0 15px rgba(255,255,255,0.5)'
-                                      }}>
-                                        {symbol}
-                                      </span>
-                                    </div>
-                                  );
-                                })}
-                              </motion.div>
-                            ) : (
-                              <motion.div
-                                key={`result-${reelIndex}-${currentPoints[reelIndex]}`}
-                                className="h-full flex flex-col justify-center relative"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ 
-                                  duration: 0.6, 
-                                  delay: reelIndex * 0.2,
-                                  ease: "easeOut"
-                                }}
-                              >
-                                {/* Top rotating symbols */}
-                                <div className="flex-1 flex flex-col justify-center space-y-2 opacity-20">
-                                  {Array.from({ length: 2 }).map((_, i) => {
-                                    const symbols = ['♦', '♠', '♥', '♣', '7'];
-                                    const symbol = symbols[(reelIndex + i + 1) % symbols.length];
-                                    const isRed = symbol === '♥' || symbol === '♦';
-                                    const isGold = symbol === '7';
-                                    
-                                    return (
-                                      <motion.div
-                                        key={`top-${i}`}
-                                        className="text-center"
-                                        animate={{ 
-                                          rotateY: [0, 360],
-                                          scale: [0.8, 1, 0.8]
-                                        }}
-                                        transition={{
-                                          duration: 3 + (i * 0.5) + (reelIndex * 0.3),
-                                          repeat: Infinity,
-                                          ease: "linear"
-                                        }}
-                                      >
-                                        <span className={`text-3xl font-bold ${
-                                          isGold ? 'text-casino-gold' : 
-                                          isRed ? 'text-casino-red' : 'text-casino-green'
-                                        }`}>
-                                          {symbol}
-                                        </span>
-                                      </motion.div>
-                                    );
-                                  })}
-                                </div>
-                                
-                                {/* Main content area */}
-                                <div className="flex-1 flex items-center justify-center p-8">
-                                  <span className="text-white text-lg leading-relaxed text-center block max-w-full font-medium">
-                                    {currentPoints[reelIndex]}
-                                  </span>
-                                </div>
-                                
-                                {/* Bottom rotating symbols */}
-                                <div className="flex-1 flex flex-col justify-center space-y-2 opacity-20">
-                                  {Array.from({ length: 2 }).map((_, i) => {
-                                    const symbols = ['♦', '♠', '♥', '♣', '7'];
-                                    const symbol = symbols[(reelIndex + i + 3) % symbols.length];
-                                    const isRed = symbol === '♥' || symbol === '♦';
-                                    const isGold = symbol === '7';
-                                    
-                                    return (
-                                      <motion.div
-                                        key={`bottom-${i}`}
-                                        className="text-center"
-                                        animate={{ 
-                                          rotateY: [360, 0],
-                                          scale: [1, 0.8, 1]
-                                        }}
-                                        transition={{
-                                          duration: 2.5 + (i * 0.4) + (reelIndex * 0.2),
-                                          repeat: Infinity,
-                                          ease: "linear"
-                                        }}
-                                      >
-                                        <span className={`text-3xl font-bold ${
-                                          isGold ? 'text-casino-gold' : 
-                                          isRed ? 'text-casino-red' : 'text-casino-green'
-                                        }`}>
-                                          {symbol}
-                                        </span>
-                                      </motion.div>
-                                    );
-                                  })}
-                                </div>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </div>
-                        
-                        {/* Professional Reel Highlight */}
-                        <div className="absolute inset-x-0 top-1/2 transform -translate-y-1/2 h-24">
-                          <div className="h-full border-t border-b border-casino-gold/30 bg-gradient-to-r from-transparent via-casino-gold/5 to-transparent" />
-                        </div>
-                        
-                        {/* Subtle Corner Indicators */}
-                        <div className="absolute top-2 right-2 w-1.5 h-1.5 bg-emerald-400/60 rounded-full animate-pulse" />
-                        <div className="absolute bottom-2 left-2 w-1.5 h-1.5 bg-casino-gold/60 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
-                      </div>
-                      
-                      {/* Reel Label */}
-                      <div className="text-center mt-4">
-                        <span className="text-muted text-sm font-mono uppercase tracking-wider">
-                          Point {reelIndex + 1}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Professional Control Panel */}
-              <div className="p-8 border-t border-white/5 bg-gradient-to-b from-white/2 to-transparent">
-                <div className="flex justify-center">
-                  <button
-                    onClick={pullLever}
-                    disabled={isSpinning}
-                    className="relative group"
-                  >
-                    <motion.div
-                      className="px-10 py-5 bg-gradient-to-b from-casino-green to-emerald-600 rounded-2xl border border-white/20 shadow-lg cursor-pointer flex items-center gap-4 backdrop-blur-sm"
-                      animate={{ 
-                        scale: leverPulled ? 0.95 : 1,
-                      }}
-                      transition={{ duration: 0.1 }}
-                      whileHover={{ 
-                        scale: 1.02,
-                        boxShadow: '0 8px 32px rgba(0, 227, 138, 0.3)'
-                      }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      {/* Spin Icon */}
-                      <motion.div
-                        className="w-6 h-6"
-                        animate={{ rotate: isSpinning ? 360 : 0 }}
-                        transition={{ 
-                          duration: 0.8, 
-                          repeat: isSpinning ? Infinity : 0,
-                          ease: "linear"
-                        }}
-                      >
-                        <svg viewBox="0 0 24 24" fill="none" className="w-full h-full text-white">
-                          <path d="M12 4V2M12 22v-2M4 12H2M22 12h-2M6.34 6.34l-1.41-1.41M19.07 19.07l-1.41-1.41M17.66 6.34l1.41-1.41M4.93 19.07l1.41-1.41" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                        </svg>
-                      </motion.div>
-                      
-                      <span className="text-white font-semibold text-lg">
-                        {isSpinning ? "Spinning..." : "Pull Lever"}
-                      </span>
-                      
-                      {/* Button Shine */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-2xl opacity-60" />
-                    </motion.div>
-                  </button>
-                </div>
-                
-                {/* Status Indicator */}
-                <div className="text-center mt-4">
-                  <motion.div
-                    className="inline-flex items-center gap-2 text-muted text-xs"
-                    animate={{ opacity: isSpinning ? 0.6 : 1 }}
-                  >
-                    <div className={`w-1.5 h-1.5 rounded-full ${isSpinning ? 'bg-casino-gold animate-pulse' : 'bg-emerald-400'}`} />
-                    <span>{isSpinning ? "Randomizing points..." : "Ready to spin"}</span>
-                  </motion.div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <PremiumSlotMachine
+            reels={whyItWorksSymbols}
+            isSpinning={isSpinning}
+            results={currentResults}
+            onSpin={handleSpin}
+            showJackpot={showJackpot}
+            showingContent={showingContent}
+            className="w-full"
+          />
         </motion.div>
+
+        {/* Content explanation when showing content */}
+        <AnimatePresence>
+          {showingContent && (
+            <motion.div 
+              className="text-center mt-12"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.6 }}
+            >
+              <motion.div 
+                className="text-2xl font-bold text-[#00E28A] mb-4"
+                animate={{ opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                🎊 Your Winning Combination Shows Why Lossless Gaming Works! 🎊
+              </motion.div>
+              <p className="text-[#A6B0BF] text-lg max-w-3xl mx-auto">
+                Each reel displays a key benefit of our revolutionary lossless casino system
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Static feature highlights when not showing content */}
+        {!showingContent && !showJackpot && !isSpinning && (
+          <motion.div 
+            className="text-center mt-16"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+              {whyItWorksPoints.slice(0, 4).map((feature, i) => (
+                <motion.div
+                  key={i}
+                  className="p-6 rounded-xl border border-[#D9B45B]/20 bg-gradient-to-b from-[#D9B45B]/5 to-transparent backdrop-blur-sm"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 + (i * 0.1), duration: 0.4 }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    borderColor: 'rgba(217, 180, 91, 0.4)',
+                    boxShadow: '0 8px 32px rgba(217, 180, 91, 0.2)'
+                  }}
+                >
+                  <div className="text-4xl mb-4">{feature.icon}</div>
+                  <h3 className="text-[#E9EEF5] font-bold mb-2">{feature.title}</h3>
+                  <p className="text-[#A6B0BF] text-sm">{feature.description.split('.')[0] + '.'}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
       </div>
     </section>
   );
