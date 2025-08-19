@@ -59,66 +59,57 @@ const whyItWorksPoints = [
   }
 ];
 
-// Normal slot machine symbols for spinning and jackpot
+// Traditional 3x3 slot machine symbols
 const whyItWorksSymbols: SlotSymbol[][] = [
-  // Reel 1 - Security & Protection symbols
+  // Reel 1
   [
-    { type: 'chip', color: 'blue', value: '1' },
-    { type: 'icon', icon: '🛡️' },
-    { type: 'dice', value: '1' },
-    { type: 'chip', color: 'green', value: '2' },
-    { type: 'icon', icon: '🔒' },
-    { type: 'dice', value: '2' },
+    { type: 'text', text: '7', isJackpot: true },
+    { type: 'icon', icon: '🍒' },
+    { type: 'text', text: 'BAR' },
+    { type: 'icon', icon: '🔔' },
+    { type: 'icon', icon: '🍋' },
+    { type: 'icon', icon: '🍊' },
+    { type: 'icon', icon: '🍇' },
     { type: 'icon', icon: '💎' },
   ],
-  // Reel 2 - Yield & Returns symbols
+  // Reel 2
   [
-    { type: 'chip', color: 'gold', value: '3' },
-    { type: 'icon', icon: '📈' },
-    { type: 'dice', value: '3' },
-    { type: 'chip', color: 'purple', value: '4' },
-    { type: 'icon', icon: '⚡' },
-    { type: 'dice', value: '4' },
-    { type: 'icon', icon: '🎯' },
+    { type: 'text', text: '7', isJackpot: true },
+    { type: 'icon', icon: '🍒' },
+    { type: 'text', text: 'BAR' },
+    { type: 'icon', icon: '🔔' },
+    { type: 'icon', icon: '🍋' },
+    { type: 'icon', icon: '🍊' },
+    { type: 'icon', icon: '🍇' },
+    { type: 'icon', icon: '💎' },
   ],
-  // Reel 3 - Games & Risk symbols
+  // Reel 3
   [
-    { type: 'chip', color: 'red', value: '5' },
-    { type: 'icon', icon: '🎰' },
-    { type: 'dice', value: '5' },
-    { type: 'chip', color: 'blue', value: '6' },
-    { type: 'icon', icon: '🎲' },
-    { type: 'dice', value: '1' },
-    { type: 'icon', icon: '🏆' },
-  ],
-  // Reel 4 - Technology & Trust symbols
-  [
-    { type: 'chip', color: 'green', value: '1' },
-    { type: 'icon', icon: '🤖' },
-    { type: 'dice', value: '2' },
-    { type: 'chip', color: 'gold', value: '2' },
-    { type: 'icon', icon: '🔍' },
-    { type: 'dice', value: '3' },
-    { type: 'icon', icon: '📊' },
+    { type: 'text', text: '7', isJackpot: true },
+    { type: 'icon', icon: '🍒' },
+    { type: 'text', text: 'BAR' },
+    { type: 'icon', icon: '🔔' },
+    { type: 'icon', icon: '🍋' },
+    { type: 'icon', icon: '🍊' },
+    { type: 'icon', icon: '🍇' },
+    { type: 'icon', icon: '💎' },
   ]
 ];
 
 // Jackpot combination - when all align
 const jackpotResults: SlotSymbol[] = [
-  { type: 'icon', icon: '👑', text: 'LOSSLESS', isJackpot: true },
-  { type: 'icon', icon: '🎰', text: 'CASINO', isJackpot: true },
-  { type: 'icon', icon: '💎', text: 'JACKPOT', isJackpot: true },
-  { type: 'icon', icon: '🏆', text: 'WINNER', isJackpot: true }
+  { type: 'text', text: '777', isJackpot: true },
+  { type: 'text', text: '777', isJackpot: true },
+  { type: 'text', text: '777', isJackpot: true }
 ];
 
 export function WhyItWorks() {
   const [isSpinning, setIsSpinning] = useState(false);
   const [spinCount, setSpinCount] = useState(0);
   const [currentResults, setCurrentResults] = useState<SlotSymbol[]>([
-    whyItWorksSymbols[0][0],
-    whyItWorksSymbols[1][0], 
-    whyItWorksSymbols[2][0],
-    whyItWorksSymbols[3][0]
+    { type: 'text', text: '7', isJackpot: true },
+    { type: 'text', text: '7', isJackpot: true },
+    { type: 'text', text: '7', isJackpot: true }
   ]);
   const [showJackpot, setShowJackpot] = useState(false);
   const [showingContent, setShowingContent] = useState(false);
@@ -149,9 +140,9 @@ export function WhyItWorks() {
         const newSpinCount = spinCount + 1;
         setSpinCount(newSpinCount);
         
-        // Generate 4 unique "Why It Works" points for educational content
+        // Generate 3 unique "Why It Works" points for educational content
         const shuffledPoints = [...whyItWorksPoints].sort(() => Math.random() - 0.5);
-        const selectedPoints = shuffledPoints.slice(0, 4);
+        const selectedPoints = shuffledPoints.slice(0, 3);
         const educationalResults = selectedPoints.map(point => ({ 
           type: 'text' as const, 
           icon: point.icon, 

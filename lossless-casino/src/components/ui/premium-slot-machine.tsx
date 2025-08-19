@@ -83,7 +83,15 @@ export const PremiumSlotMachine = memo(function PremiumSlotMachine({
       
       case 'text':
         return (
-          <div className={`${size === 'large' ? 'text-lg' : 'text-sm'} font-bold ${symbol.isJackpot ? 'text-[#D9B45B]' : 'text-[#E9EEF5]'} text-center leading-tight px-2`}>
+          <div className={`${size === 'large' ? 'text-2xl sm:text-3xl md:text-4xl' : 'text-lg sm:text-xl md:text-2xl'} font-black ${symbol.isJackpot ? 'text-[#FFD700]' : 'text-[#E9EEF5]'} text-center leading-tight px-2 tracking-wider`}
+            style={{
+              textShadow: symbol.isJackpot 
+                ? '0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.4), 2px 2px 4px rgba(0, 0, 0, 0.9), 0 0 60px rgba(255, 215, 0, 0.2)'
+                : '0 0 15px rgba(233, 238, 245, 0.6), 0 0 30px rgba(233, 238, 245, 0.3), 2px 2px 4px rgba(0, 0, 0, 0.8)',
+              WebkitTextStroke: symbol.isJackpot ? '1px rgba(184, 134, 11, 0.8)' : '1px rgba(0, 0, 0, 0.3)',
+              filter: symbol.isJackpot ? 'drop-shadow(0 0 10px rgba(255, 215, 0, 0.6))' : 'none'
+            }}
+          >
             {symbol.text}
           </div>
         );
@@ -174,7 +182,7 @@ export const PremiumSlotMachine = memo(function PremiumSlotMachine({
 
         {/* Reels container */}
         <div className="p-2 sm:p-4 md:p-6 lg:p-8">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-1 sm:gap-2 md:gap-4">
+          <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4">
             {reels.map((reel, reelIndex) => (
               <div key={reelIndex} className="relative">
                 {/* Reel frame - expandable for content */}
@@ -203,7 +211,7 @@ export const PremiumSlotMachine = memo(function PremiumSlotMachine({
                           key={`spinning-${reelIndex}`}
                           className="flex flex-col h-full"
                           initial={{ y: 0 }}
-                          animate={{ y: [-1200, 0] }}
+                          animate={{ y: [-800, 0] }}
                           transition={{ 
                             duration: 0.1, 
                             repeat: Infinity,
@@ -211,7 +219,7 @@ export const PremiumSlotMachine = memo(function PremiumSlotMachine({
                           }}
                         >
                           {/* Spinning symbols */}
-                          {Array.from({ length: 20 }).map((_, i) => {
+                          {Array.from({ length: 15 }).map((_, i) => {
                             const randomSymbol = reel[i % reel.length];
                             return (
                               <div key={i} className="h-16 flex items-center justify-center border-b border-white/5">
@@ -232,80 +240,73 @@ export const PremiumSlotMachine = memo(function PremiumSlotMachine({
                             ease: "easeOut"
                           }}
                         >
-                          {/* Background symbols (blurred) - hidden when showing content */}
-                          {!showingContent && (
-                            <div className="flex-1 flex flex-col justify-center opacity-20 blur-sm">
-                              {Array.from({ length: 3 }).map((_, i) => (
-                                <div key={`bg-${i}`} className="h-12 flex items-center justify-center">
-                                  {renderSymbol(reel[(reelIndex + i) % reel.length], 'small')}
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                          
-                          {/* Main result */}
-                          <div className="flex-1 flex items-center justify-center p-1 sm:p-2 md:p-4 relative z-10">
-                            {showingContent ? (
-                              /* Full card content display mode */
-                              <motion.div
-                                className="p-1 sm:p-2 md:p-4 lg:p-6 text-center h-full flex flex-col justify-center"
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.8 }}
-                              >
-                                {/* Icon */}
-                                <motion.div 
-                                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-1 sm:mb-2 md:mb-3 lg:mb-4"
-                                  animate={{ scale: [1, 1.1, 1] }}
-                                  transition={{ duration: 2, repeat: Infinity }}
+                          {/* Traditional 3x3 slot machine layout */}
+                          {!showingContent ? (
+                            <div className="flex flex-col h-full">
+                              {/* Row 1 - Top */}
+                              <div className="flex-1 flex items-center justify-center opacity-70 border-b border-white/10">
+                                {renderSymbol(reel[(reelIndex + 0) % reel.length], 'small')}
+                              </div>
+                              
+                              {/* Row 2 - MIDDLE PAYLINE (highlighted) */}
+                              <div className="flex-1 flex items-center justify-center relative border-y-2 border-[#00E28A]/50 bg-[#00E28A]/10">
+                                {/* Payline indicator */}
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#00E28A]/20 to-transparent"></div>
+                                <motion.div
+                                  className="relative z-10"
+                                  animate={{ 
+                                    scale: results[reelIndex]?.isJackpot ? [1, 1.2, 1] : 1,
+                                    rotate: results[reelIndex]?.type === 'dice' ? [0, 360, 0] : 0
+                                  }}
+                                  transition={{ 
+                                    duration: results[reelIndex]?.isJackpot ? 1 : 2,
+                                    repeat: results[reelIndex]?.isJackpot ? Infinity : 0
+                                  }}
                                 >
-                                  {results[reelIndex]?.icon || '💎'}
+                                  {renderSymbol(results[reelIndex] || reel[1], 'large')}
                                 </motion.div>
-                                
-                                {/* Title */}
-                                <div className="text-white text-xs sm:text-sm md:text-base lg:text-lg font-bold leading-tight mb-1 sm:mb-2 md:mb-3 lg:mb-4">
-                                  {results[reelIndex]?.text || 'Benefit'}
-                                </div>
-                                
-                                {/* Full description */}
-                                <div className="text-[#A6B0BF] text-xs leading-relaxed">
-                                  {results[reelIndex]?.description || 'Learn more about this benefit'}
-                                </div>
-                                
-                                {/* Decorative divider */}
-                                <motion.div 
-                                  className="w-8 sm:w-12 md:w-16 h-0.5 bg-[#00E28A] mx-auto mt-2 sm:mt-3 md:mt-4 rounded-full"
-                                  initial={{ width: 0 }}
-                                  animate={{ width: '100%' }}
-                                  transition={{ delay: 0.5, duration: 0.8 }}
-                                />
-                              </motion.div>
-                            ) : (
-                              /* Normal symbol display mode */
-                              <motion.div
-                                animate={{ 
-                                  scale: results[reelIndex]?.isJackpot ? [1, 1.2, 1] : 1,
-                                  rotate: results[reelIndex]?.type === 'dice' ? [0, 360, 0] : 0
-                                }}
-                                transition={{ 
-                                  duration: results[reelIndex]?.isJackpot ? 1 : 2,
-                                  repeat: results[reelIndex]?.isJackpot ? Infinity : 0
-                                }}
-                              >
-                                {renderSymbol(results[reelIndex] || reel[0])}
-                              </motion.div>
-                            )}
-                          </div>
-                          
-                          {/* Background symbols (blurred) - hidden when showing content */}
-                          {!showingContent && (
-                            <div className="flex-1 flex flex-col justify-center opacity-20 blur-sm">
-                              {Array.from({ length: 3 }).map((_, i) => (
-                                <div key={`bg-bottom-${i}`} className="h-12 flex items-center justify-center">
-                                  {renderSymbol(reel[(reelIndex + i + 4) % reel.length], 'small')}
-                                </div>
-                              ))}
+                              </div>
+                              
+                              {/* Row 3 - Bottom */}
+                              <div className="flex-1 flex items-center justify-center opacity-70 border-t border-white/10">
+                                {renderSymbol(reel[(reelIndex + 2) % reel.length], 'small')}
+                              </div>
                             </div>
+                          ) : (
+                            /* Content display mode */
+                            <motion.div
+                              className="p-1 sm:p-2 md:p-4 lg:p-6 text-center h-full flex flex-col justify-center"
+                              initial={{ opacity: 0, scale: 0.9 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              transition={{ duration: 0.8 }}
+                            >
+                              {/* Icon */}
+                              <motion.div 
+                                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-1 sm:mb-2 md:mb-3 lg:mb-4"
+                                animate={{ scale: [1, 1.1, 1] }}
+                                transition={{ duration: 2, repeat: Infinity }}
+                              >
+                                {results[reelIndex]?.icon || '💎'}
+                              </motion.div>
+                              
+                              {/* Title */}
+                              <div className="text-white text-xs sm:text-sm md:text-base lg:text-lg font-bold leading-tight mb-1 sm:mb-2 md:mb-3 lg:mb-4">
+                                {results[reelIndex]?.text || 'Benefit'}
+                              </div>
+                              
+                              {/* Full description */}
+                              <div className="text-[#A6B0BF] text-xs leading-relaxed">
+                                {results[reelIndex]?.description || 'Learn more about this benefit'}
+                              </div>
+                              
+                              {/* Decorative divider */}
+                              <motion.div 
+                                className="w-8 sm:w-12 md:w-16 h-0.5 bg-[#00E28A] mx-auto mt-2 sm:mt-3 md:mt-4 rounded-full"
+                                initial={{ width: 0 }}
+                                animate={{ width: '100%' }}
+                                transition={{ delay: 0.5, duration: 0.8 }}
+                              />
+                            </motion.div>
                           )}
                         </motion.div>
                       )}

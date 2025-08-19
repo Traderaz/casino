@@ -130,7 +130,7 @@ export const PremiumBlackjackGame = memo(function PremiumBlackjackGame({
               </div>
 
               {/* Dealt Cards */}
-              <div className="flex gap-1 sm:gap-2 md:gap-3 lg:gap-4 xl:gap-6 items-end min-h-[220px] sm:min-h-[120px] md:min-h-[150px] lg:min-h-[200px] xl:min-h-[250px]">
+              <div className="flex gap-1 sm:gap-2 md:gap-3 lg:gap-4 xl:gap-6 items-end min-h-[176px] sm:min-h-[120px] md:min-h-[150px] lg:min-h-[200px] xl:min-h-[250px]">
                 <AnimatePresence>
                   {dealtCards.map((card, index) => (
                     <motion.div
@@ -146,10 +146,7 @@ export const PremiumBlackjackGame = memo(function PremiumBlackjackGame({
                     >
                       {/* Card */}
                       <motion.div
-                        className={`${dealtCards.length === cards.length && !isDealing 
-                          ? 'w-20 h-52 sm:w-24 sm:h-36 md:w-28 md:h-42 lg:w-32 lg:h-48 xl:w-40 xl:h-60' 
-                          : 'w-14 h-36 sm:w-16 sm:h-24 md:w-20 md:h-28 lg:w-24 lg:h-36 xl:w-28 xl:h-42'} 
-                        rounded-md sm:rounded-lg md:rounded-xl shadow-2xl cursor-pointer transition-all duration-1000`}
+                        className="w-18 h-44 sm:w-32 sm:h-48 md:w-36 md:h-56 lg:w-42 lg:h-64 xl:w-52 xl:h-80 rounded-md sm:rounded-lg md:rounded-xl shadow-2xl cursor-pointer"
                         whileHover={{ y: -10, scale: 1.05 }}
                         whileTap={{ scale: 0.98 }}
                         style={{ perspective: '1000px' }}
@@ -183,50 +180,40 @@ export const PremiumBlackjackGame = memo(function PremiumBlackjackGame({
                               transform: 'rotateY(0deg)'
                             }}
                           >
-                            <div className="relative w-full h-full p-1 sm:p-2 md:p-3 lg:p-4">
+                            <div className="relative w-full h-full p-2 sm:p-3 md:p-4 lg:p-5 xl:p-6">
                               {/* Top Left */}
-                              <div className="absolute top-0.5 left-0.5 sm:top-1 sm:left-1 md:top-2 md:left-2 lg:top-3 lg:left-3 text-center">
-                                <div className={`text-xs sm:text-sm md:text-lg lg:text-xl font-bold ${card.color}`}>
+                              <div className="absolute top-1 left-1 sm:top-2 sm:left-2 md:top-3 md:left-3 lg:top-4 lg:left-4 text-center">
+                                <div className={`text-sm sm:text-base md:text-xl lg:text-2xl xl:text-3xl font-bold ${card.color}`}>
                                   {card.rank}
                                 </div>
-                                <div className={`text-xs sm:text-xs md:text-base lg:text-lg ${card.color}`}>
+                                <div className={`text-sm sm:text-base md:text-xl lg:text-2xl xl:text-3xl ${card.color}`}>
                                   {card.suit}
                                 </div>
                               </div>
                               
                               {/* Bottom Right (rotated) */}
-                              <div className="absolute bottom-0.5 right-0.5 sm:bottom-1 sm:right-1 md:bottom-2 md:right-2 lg:bottom-3 lg:right-3 text-center transform rotate-180">
-                                <div className={`text-xs sm:text-sm md:text-lg lg:text-xl font-bold ${card.color}`}>
+                              <div className="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 md:bottom-3 md:right-3 lg:bottom-4 lg:right-4 text-center transform rotate-180">
+                                <div className={`text-sm sm:text-base md:text-xl lg:text-2xl xl:text-3xl font-bold ${card.color}`}>
                                   {card.rank}
                                 </div>
-                                <div className={`text-xs sm:text-xs md:text-base lg:text-lg ${card.color}`}>
+                                <div className={`text-sm sm:text-base md:text-xl lg:text-2xl xl:text-3xl ${card.color}`}>
                                   {card.suit}
                                 </div>
                               </div>
 
                               {/* Center Content */}
-                              <div className="flex flex-col items-center justify-center h-full text-center px-0.5 sm:px-1 md:px-2 lg:px-3">
-                                <div className={`${dealtCards.length === cards.length && !isDealing 
-                                  ? 'text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-1 sm:mb-2 md:mb-3 lg:mb-4' 
-                                  : 'text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-0.5 sm:mb-1 md:mb-2 lg:mb-3'} 
-                                  ${card.color} transition-all duration-1000`}>
+                              <div className="flex flex-col items-center justify-center h-full text-center px-1 sm:px-2 md:px-3 lg:px-4 xl:px-6">
+                                <div className={`text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-2 sm:mb-3 md:mb-4 lg:mb-5 xl:mb-6 ${card.color}`}>
                                   {card.suit}
                                 </div>
-                                <h3 className={`${dealtCards.length === cards.length && !isDealing 
-                                  ? 'text-xs sm:text-sm md:text-base lg:text-lg mb-1 sm:mb-2 md:mb-3 lg:mb-4' 
-                                  : 'text-xs sm:text-sm mb-0.5 sm:mb-1 md:mb-2'} 
-                                  font-bold text-gray-800 leading-tight transition-all duration-1000`}>
-                                  {card.title}
-                                </h3>
-                                <p className={`${dealtCards.length === cards.length && !isDealing 
-                                  ? 'text-xs sm:text-sm' 
-                                  : 'text-xs'} 
-                                  text-gray-600 leading-relaxed transition-all duration-1000`}>
-                                  {/* Always show full description on mobile, conditional on desktop */}
-                                  <span className="sm:hidden">{card.description}</span>
-                                  <span className="hidden sm:inline">
-                                    {dealtCards.length === cards.length && !isDealing ? card.description : card.description.split('.')[0] + '.'}
-                                  </span>
+                                <div className="flex-1 sm:h-10 md:h-12 lg:h-14 xl:h-16 flex items-center justify-center mb-0 sm:mb-3 md:mb-4 lg:mb-5 xl:mb-6">
+                                  <h3 className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-bold text-gray-800 leading-tight text-center px-1">
+                                    {card.title}
+                                  </h3>
+                                </div>
+                                {/* Description - hidden on mobile, shown on desktop */}
+                                <p className="hidden sm:block text-xs md:text-sm lg:text-base xl:text-lg text-gray-600 leading-relaxed">
+                                  {card.description}
                                 </p>
                               </div>
                             </div>
@@ -290,6 +277,40 @@ export const PremiumBlackjackGame = memo(function PremiumBlackjackGame({
           </AnimatePresence>
         </div>
       </div>
+
+      {/* Mobile Information Tiles - Only shown on mobile */}
+      <AnimatePresence>
+        {dealtCards.length > 0 && (
+          <motion.div 
+            className="sm:hidden mt-6 px-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
+            <h3 className="text-lg font-bold text-white mb-4 text-center">Card Details</h3>
+            <div className="space-y-3">
+              {dealtCards.map((card, index) => (
+                <motion.div
+                  key={`info-${card.id}`}
+                  className="bg-black/40 rounded-lg p-4 border border-white/10"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.2 + 0.8 }}
+                >
+                  <div className="flex items-center mb-2">
+                    <div className={`text-lg ${card.color} mr-2`}>{card.suit}</div>
+                    <h4 className="text-white font-bold text-sm">{card.title}</h4>
+                    <div className="ml-auto text-xs text-[#A6B0BF]">VALUE: {card.value}</div>
+                  </div>
+                  <p className="text-[#A6B0BF] text-sm leading-relaxed">
+                    {card.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Celebration Message */}
       <AnimatePresence>

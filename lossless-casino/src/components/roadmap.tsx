@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { content } from "@/lib/content";
 import { CasinoBackground } from "@/components/ui/casino-background";
 import { PremiumPlayingCard } from "@/components/ui/premium-playing-card";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // Poker hand progression - building toward Royal Flush
 const pokerCards = {
@@ -22,6 +22,46 @@ const statusColors = {
 
 export function Roadmap() {
   const [revealedCards, setRevealedCards] = useState<number[]>([]);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Intersection Observer for scroll-based card reveals
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    
+    cardRefs.current.forEach((cardRef, index) => {
+      if (cardRef) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting && !revealedCards.includes(index)) {
+                // Add a small delay for natural sequential reveal
+                setTimeout(() => {
+                  setRevealedCards(prev => {
+                    if (!prev.includes(index)) {
+                      return [...prev, index];
+                    }
+                    return prev;
+                  });
+                }, index * 200); // Stagger each card by 200ms
+              }
+            });
+          },
+          {
+            threshold: 0.3, // Trigger when 30% of card is visible
+            rootMargin: '-50px 0px -50px 0px' // Slight offset for better timing
+          }
+        );
+        
+        observer.observe(cardRef);
+        observers.push(observer);
+      }
+    });
+
+    // Cleanup observers
+    return () => {
+      observers.forEach(observer => observer.disconnect());
+    };
+  }, [revealedCards]);
 
   const handleCardClick = (index: number) => {
     if (!revealedCards.includes(index)) {
@@ -67,7 +107,7 @@ export function Roadmap() {
               The Royal Flush Roadmap
             </h2>
             <p className="text-body text-[#A6B0BF] max-w-2xl mx-auto mb-6">
-              Building toward the ultimate hand - click each card to reveal our journey to the perfect Royal Flush
+              Building toward the ultimate hand - scroll down to naturally reveal each card in our journey to the perfect Royal Flush
             </p>
             
             {/* Poker hand indicator */}
@@ -111,6 +151,7 @@ export function Roadmap() {
                   return (
                     <motion.div
                       key={index}
+                      ref={(el) => { cardRefs.current[index] = el; }}
                       className="text-center"
                       initial={{ opacity: 0, y: 20, rotateY: -90 }}
                       whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
@@ -185,6 +226,12 @@ export function Roadmap() {
                   return (
                     <motion.div
                       key={index}
+                      ref={(el) => { 
+                        // Use the same ref array for mobile cards
+                        if (!cardRefs.current[index]) {
+                          cardRefs.current[index] = el; 
+                        }
+                      }}
                       className="flex flex-col items-center"
                       initial={{ opacity: 0, y: 20, rotateY: -90 }}
                       whileInView={{ opacity: 1, y: 0, rotateY: 0 }}

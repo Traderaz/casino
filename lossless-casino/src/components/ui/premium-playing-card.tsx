@@ -50,12 +50,31 @@ export const PremiumPlayingCard = memo(function PremiumPlayingCard({
   const { width, height } = sizeConfigs[size];
 
   return (
-    <div className={`relative ${className}`} style={{ width, height }}>
+    <motion.div 
+      className={`relative ${className}`} 
+      style={{ width, height }}
+      animate={{
+        filter: isRevealed 
+          ? [`drop-shadow(0 0 0px ${statusColor}00)`, `drop-shadow(0 0 20px ${statusColor}80)`, `drop-shadow(0 0 10px ${statusColor}60)`]
+          : `drop-shadow(0 0 0px ${statusColor}00)`
+      }}
+      transition={{ 
+        filter: { duration: 1, ease: "easeOut" }
+      }}
+    >
       <motion.div
         className="w-full h-full cursor-pointer"
         style={{ transformStyle: 'preserve-3d' }}
-        animate={{ rotateY: isRevealed ? 180 : 0 }}
-        transition={{ duration: 0.6, ease: "easeInOut" }}
+        animate={{ 
+          rotateY: isRevealed ? 180 : 0,
+          scale: isRevealed ? [1, 1.1, 1] : 1,
+          y: isRevealed ? [0, -10, 0] : 0
+        }}
+        transition={{ 
+          rotateY: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
+          scale: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
+          y: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }
+        }}
         onClick={onClick}
         whileHover={{ scale: 1.05, y: -8 }}
         whileTap={{ scale: 0.98 }}
@@ -233,6 +252,6 @@ export const PremiumPlayingCard = memo(function PremiumPlayingCard({
           </motion.div>
         </>
       )}
-    </div>
+    </motion.div>
   );
 });
