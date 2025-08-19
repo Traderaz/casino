@@ -1,6 +1,5 @@
 {
   "buildCommand": "cd lossless-casino && npm run build",
   "outputDirectory": "lossless-casino/.next",
-  "installCommand": "cd lossless-casino && npm install",
-  "rootDirectory": "lossless-casino"
+  "installCommand": "cd lossless-casino && npm install"
 }
