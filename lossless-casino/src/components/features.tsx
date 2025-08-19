@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { content } from "@/lib/content";
 import { CasinoBackground } from "@/components/ui/casino-background";
-import { PremiumBlackjackGame, BlackjackCard } from "@/components/ui/premium-blackjack-game";
+import { SimpleBlackjackGame, BlackjackCard } from "@/components/ui/simple-blackjack-game";
 
 const featureIcons = {
   spark: () => (
@@ -42,25 +42,57 @@ const featureIcons = {
 export function Features() {
   const [isDealing, setIsDealing] = useState(false);
 
-  // Transform features into blackjack cards that add up to 21
-  const blackjackCards: BlackjackCard[] = content.features.map((feature, index) => ({
-    id: index,
-    title: feature.title,
-    description: feature.description,
-    suit: index === 0 ? '♠' : index === 1 ? '♥' : '♦', // Spades, Hearts, Diamonds
-    rank: index === 0 ? 'A' : index === 1 ? 'K' : 'Q', // Ace, King, Queen
-    value: index === 0 ? 11 : index === 1 ? 5 : 5, // 11 + 5 + 5 = 21 (Blackjack!)
-    color: index === 0 ? 'text-gray-800' : index === 1 ? 'text-red-600' : 'text-red-600'
-  }));
+  // Generate random blackjack cards that always add up to 21
+  const generateRandomCards = () => {
+    const suits = ['♠', '♥', '♦', '♣'];
+    const colors = ['text-gray-800', 'text-red-600', 'text-red-600', 'text-gray-800'];
+    
+    // Possible combinations that add to 21
+    const combinations = [
+      [{ rank: 'A', value: 11 }, { rank: '10', value: 10 }], // Ace + 10 (natural blackjack)
+      [{ rank: 'A', value: 11 }, { rank: '5', value: 5 }, { rank: '5', value: 5 }], // Ace + 5 + 5
+      [{ rank: 'A', value: 11 }, { rank: '4', value: 4 }, { rank: '6', value: 6 }], // Ace + 4 + 6
+      [{ rank: 'A', value: 11 }, { rank: '3', value: 3 }, { rank: '7', value: 7 }], // Ace + 3 + 7
+      [{ rank: 'A', value: 11 }, { rank: '2', value: 2 }, { rank: '8', value: 8 }], // Ace + 2 + 8
+      [{ rank: '7', value: 7 }, { rank: '7', value: 7 }, { rank: '7', value: 7 }], // Triple 7s
+      [{ rank: '10', value: 10 }, { rank: '6', value: 6 }, { rank: '5', value: 5 }], // 10 + 6 + 5
+      [{ rank: '9', value: 9 }, { rank: '6', value: 6 }, { rank: '6', value: 6 }], // 9 + 6 + 6
+      [{ rank: '8', value: 8 }, { rank: '7', value: 7 }, { rank: '6', value: 6 }], // 8 + 7 + 6
+    ];
+    
+    // Pick a random combination
+    const randomCombination = combinations[Math.floor(Math.random() * combinations.length)];
+    
+    // Assign random suits and create cards
+    return randomCombination.map((card, index) => {
+      const randomSuit = suits[Math.floor(Math.random() * suits.length)];
+      const suitIndex = suits.indexOf(randomSuit);
+      
+      return {
+        id: index,
+        title: content.features[index % content.features.length].title,
+        description: content.features[index % content.features.length].description,
+        suit: randomSuit as '♠' | '♥' | '♦' | '♣',
+        rank: card.rank,
+        value: card.value,
+        color: colors[suitIndex]
+      };
+    });
+  };
+
+  const [blackjackCards, setBlackjackCards] = useState<BlackjackCard[]>([]);
 
   const handleDeal = () => {
     if (isDealing) return;
     setIsDealing(true);
     
-    // Reset dealing state after all cards are dealt
+    // Generate new random cards that add to 21
+    setBlackjackCards(generateRandomCards());
+    
+    // Reset after dealing animation completes
     setTimeout(() => {
       setIsDealing(false);
-    }, blackjackCards.length * 1500 + 2000); // Total dealing time + buffer
+    }, 4000); // Cards dealing animation duration + buffer
   };
 
   return (
@@ -86,7 +118,7 @@ export function Features() {
               What it <span className="text-[#D9B45B]">is</span>
             </h2>
             <p className="text-body text-[#A6B0BF] max-w-2xl mx-auto mb-8">
-              Watch the dealer reveal each innovation card to build the perfect hand - three cards that add up to <span className="text-[#00E28A]">21 (Blackjack!)</span>
+              Watch the dealer reveal each innovation card to build the perfect hand - two or more cards that add up to <span className="text-[#00E28A]">21 (Blackjack)</span>
             </p>
             
             {/* Deal Controls */}
@@ -154,7 +186,7 @@ export function Features() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
-            <PremiumBlackjackGame
+            <SimpleBlackjackGame
               cards={blackjackCards}
               isDealing={isDealing}
               onDeal={handleDeal}

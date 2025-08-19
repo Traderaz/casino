@@ -51,10 +51,10 @@ export function Flywheel() {
             </p>
           </motion.div>
 
-          {/* Poker Chips Flywheel */}
+          {/* Circular Flywheel */}
           <div className="relative">
             
-            {/* Desktop layout - Poker Chips */}
+            {/* Desktop layout - Linear with Stacked Animation */}
             <div className="hidden lg:block">
               <div className="flex items-center justify-center gap-6 mb-12">
                 {content.flywheel.steps.map((step, index) => {
@@ -64,16 +64,26 @@ export function Flywheel() {
                   return (
                     <div key={index} className="flex items-center">
                       
-                      {/* 3D Poker Chip */}
+                      {/* 3D Poker Chip with Stacked Animation */}
                       <motion.div
                         className="relative"
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true, margin: "-50px" }}
+                        initial={{ 
+                          opacity: 0, 
+                          scale: 0.5,
+                          x: -(index * 200), // Start stacked at center
+                          y: 0
+                        }}
+                        whileInView={{ 
+                          opacity: 1, 
+                          scale: 1,
+                          x: 0, // Separate to final positions
+                          y: 0
+                        }}
+                        viewport={{ once: true, margin: "-100px" }}
                         transition={{ 
-                          duration: 0.4, 
-                          ease: "easeOut",
-                          delay: index * 0.1
+                          duration: 0.8, 
+                          ease: [0.23, 1, 0.32, 1],
+                          delay: index * 0.15
                         }}
                       >
                         <PremiumPokerChip
@@ -102,7 +112,7 @@ export function Flywheel() {
                           transition={{ 
                             duration: 0.3, 
                             ease: "easeOut",
-                            delay: index * 0.1 + 0.2
+                            delay: index * 0.15 + 0.4
                           }}
                         >
                           <ArrowRight className="w-6 h-6 text-casino-gold" />
@@ -122,12 +132,12 @@ export function Flywheel() {
                 transition={{ 
                   duration: 0.4, 
                   ease: "easeOut",
-                  delay: 0.8
+                  delay: 1.2
                 }}
               >
-                <div className="flex items-center gap-3 text-[#A6B0BF] bg-white/5 px-4 py-2 rounded-full border border-white/10">
-                  <RotateCw className="w-4 h-4 text-casino-green" />
-                  <span className="text-sm font-medium">Cycle repeats continuously</span>
+                <div className="flex items-center gap-3 text-[#A6B0BF] bg-white/5 px-6 py-3 rounded-full border border-white/10">
+                  <RotateCw className="w-4 h-4 text-casino-green animate-spin" style={{ animationDuration: '3s' }} />
+                  <span className="text-sm font-medium">Self-reinforcing growth cycle</span>
                 </div>
               </motion.div>
               

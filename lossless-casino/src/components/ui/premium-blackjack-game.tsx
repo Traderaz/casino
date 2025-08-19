@@ -76,22 +76,24 @@ export const PremiumBlackjackGame = memo(function PremiumBlackjackGame({
     <div className={`relative flex flex-col items-center ${className}`}>
       {/* Blackjack Table */}
       <div className="relative w-full max-w-6xl">
-        {/* Table Felt */}
+        {/* Table Felt - Much Bigger */}
         <div 
-          className="w-full h-[24rem] sm:h-[20rem] md:h-[24rem] lg:h-[28rem] xl:h-[32rem] rounded-xl sm:rounded-2xl md:rounded-3xl relative overflow-hidden"
+          className="w-full h-[28rem] sm:h-[32rem] md:h-[36rem] lg:h-[40rem] xl:h-[44rem] rounded-xl sm:rounded-2xl md:rounded-3xl relative overflow-hidden"
           style={{
             background: `
-              radial-gradient(ellipse 80% 60% at 50% 50%, 
-                rgba(34, 139, 34, 0.8) 0%, 
-                rgba(0, 100, 0, 0.6) 40%, 
-                rgba(0, 50, 0, 0.4) 80%, 
+              radial-gradient(ellipse 85% 65% at 50% 50%, 
+                rgba(34, 139, 34, 0.9) 0%, 
+                rgba(0, 120, 0, 0.7) 30%, 
+                rgba(0, 80, 0, 0.5) 60%, 
+                rgba(0, 40, 0, 0.3) 85%, 
                 rgba(0, 0, 0, 0.8) 100%
               )
             `,
             boxShadow: `
-              0 20px 60px rgba(0, 0, 0, 0.8),
-              inset 0 4px 8px rgba(255, 255, 255, 0.1),
-              inset 0 -4px 8px rgba(0, 0, 0, 0.5)
+              0 25px 80px rgba(0, 0, 0, 0.9),
+              inset 0 6px 12px rgba(255, 255, 255, 0.15),
+              inset 0 -6px 12px rgba(0, 0, 0, 0.6),
+              0 0 0 3px rgba(212, 175, 55, 0.3)
             `
           }}
         >

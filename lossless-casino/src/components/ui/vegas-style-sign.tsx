@@ -15,7 +15,7 @@ export function VegasStyleSign() {
 
   return (
     <motion.div
-      className="relative mx-auto mb-4 w-[95vw] max-w-[450px] h-[260px] sm:w-[600px] sm:h-[343px] md:w-[800px] md:h-[457px] lg:w-[1050px] lg:h-[600px]"
+      className="relative mx-auto mb-4 w-[95vw] max-w-[630px] h-[364px] sm:w-[600px] sm:h-[343px] md:w-[800px] md:h-[457px] lg:w-[1050px] lg:h-[600px] -translate-y-[15%] sm:translate-y-0 scale-[1.4] sm:scale-100"
       initial={{ opacity: 0, scale: 0.95, y: -10 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}

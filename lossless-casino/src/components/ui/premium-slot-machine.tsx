@@ -16,22 +16,47 @@ export interface SlotSymbol {
 }
 
 export interface PremiumSlotMachineProps {
-  reels: SlotSymbol[][];
-  isSpinning: boolean;
-  results: SlotSymbol[];
-  onSpin: () => void;
+  reels?: SlotSymbol[][];
+  isSpinning?: boolean;
+  results?: SlotSymbol[];
+  onSpin?: () => void;
   showJackpot?: boolean;
   showingContent?: boolean;
   className?: string;
 }
 
+// Default reels for display purposes
+const defaultReels: SlotSymbol[][] = [
+  [
+    { type: 'icon', icon: '🍒' },
+    { type: 'icon', icon: '🍋' },
+    { type: 'icon', icon: '🍊' }
+  ],
+  [
+    { type: 'icon', icon: '⭐' },
+    { type: 'icon', icon: '💎' },
+    { type: 'icon', icon: '👑' }
+  ],
+  [
+    { type: 'icon', icon: '🎰' },
+    { type: 'icon', icon: '🍀' },
+    { type: 'icon', icon: '💰' }
+  ]
+];
+
+const defaultResults: SlotSymbol[] = [
+  { type: 'icon', icon: '🍒' },
+  { type: 'icon', icon: '⭐' },
+  { type: 'icon', icon: '🎰' }
+];
+
 const casinoIcons = ['♠', '♥', '♦', '♣', '👑', '🎰', '💎', '⭐'];
 
 export const PremiumSlotMachine = memo(function PremiumSlotMachine({
-  reels,
-  isSpinning,
-  results,
-  onSpin,
+  reels = defaultReels,
+  isSpinning = false,
+  results = defaultResults,
+  onSpin = () => {},
   showJackpot = false,
   showingContent = false,
   className = ''

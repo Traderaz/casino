@@ -76,7 +76,7 @@ export function Hero({ onJoinClick }: HeroProps) {
 
         {/* CTAs */}
         <motion.div 
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10"
+          className="flex flex-row gap-4 justify-center items-center mb-10"
           initial={{ opacity: 0, y: 8, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1], delay: 0.7 }}

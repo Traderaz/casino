@@ -53,13 +53,28 @@ export const content = {
   
   flywheel: {
     title: "The Flywheel",
-    subtitle: "Self-reinforcing growth cycle",
+    subtitle: "Self-reinforcing growth cycle that compounds value for all participants",
     steps: [
-      { label: "Fees", description: "Protocol revenue from games" },
-      { label: "Treasury", description: "Accumulated protocol funds" },
-      { label: "Bigger Jackpots", description: "Larger prizes attract more players" },
-      { label: "TVL ↑", description: "More deposits, more yield" },
-      { label: "More Fees", description: "Cycle repeats with compound growth" }
+      { 
+        label: "Protocol Fees", 
+        description: "Revenue generated from all casino games and yield farming activities, creating sustainable income streams"
+      },
+      { 
+        label: "Treasury Growth", 
+        description: "Accumulated funds are strategically deployed to enhance platform features and security measures"
+      },
+      { 
+        label: "Enhanced Jackpots", 
+        description: "Larger prize pools and more frequent rewards attract premium players and increase engagement"
+      },
+      { 
+        label: "TVL Expansion", 
+        description: "Growing user base deposits more assets, generating higher collective yields for all participants"
+      },
+      { 
+        label: "Revenue Amplification", 
+        description: "Increased activity generates more fees, accelerating the entire cycle with exponential growth potential"
+      }
     ]
   },
   

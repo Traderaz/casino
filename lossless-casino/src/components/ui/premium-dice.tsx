@@ -48,11 +48,21 @@ export const PremiumDice = memo(function PremiumDice({
 
   if (!mounted) return null;
 
-  const [frontValue, rightValue, topValue, backValue, leftValue, bottomValue] = values;
+  // Validate and clamp values to 1-6 range
+  const clampValue = (val: number): 1 | 2 | 3 | 4 | 5 | 6 => {
+    const clamped = Math.max(1, Math.min(6, Math.floor(val))) as 1 | 2 | 3 | 4 | 5 | 6;
+    return clamped;
+  };
+
+  const [frontValue, rightValue, topValue, backValue, leftValue, bottomValue] = values.map(clampValue);
 
   // Helper function to render dots for any face
   const renderDots = (value: 1 | 2 | 3 | 4 | 5 | 6) => {
     const pattern = dotPatterns[value];
+    if (!pattern) {
+      console.error(`Invalid dice value: ${value}`);
+      return null;
+    }
     return (
       <div className="absolute inset-0 p-1">
         <div 
@@ -67,7 +77,7 @@ export const PremiumDice = memo(function PremiumDice({
           {Array.from({ length: 9 }, (_, i) => {
             const row = Math.floor(i / 3);
             const col = i % 3;
-            const shouldShowDot = pattern.some(([r, c]) => r === row && c === col);
+            const shouldShowDot = pattern && pattern.some(([r, c]) => r === row && c === col);
             
             return (
               <div
