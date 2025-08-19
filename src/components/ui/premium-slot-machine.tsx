@@ -173,20 +173,24 @@ export const PremiumSlotMachine = memo(function PremiumSlotMachine({
         </div>
 
         {/* Reels container */}
-        <div className="p-8">
-          <div className="grid grid-cols-4 gap-4">
+        <div className="p-2 sm:p-4 md:p-6 lg:p-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-1 sm:gap-2 md:gap-4">
             {reels.map((reel, reelIndex) => (
               <div key={reelIndex} className="relative">
                 {/* Reel frame - expandable for content */}
                 <motion.div 
-                  className="bg-black/60 rounded-xl border-2 overflow-hidden relative backdrop-blur-sm"
+                  className={`bg-black/60 rounded-xl border-2 overflow-hidden relative backdrop-blur-sm ${
+                    showingContent 
+                      ? 'sm:min-h-[350px] md:min-h-[400px]' 
+                      : 'sm:h-[280px] sm:min-h-[280px] md:h-[320px] md:min-h-[320px]'
+                  }`}
                   style={{
                     borderColor: showingContent ? '#00E28A' : '#D9B45B',
                     borderWidth: showingContent ? '3px' : '2px'
                   }}
                   animate={{
-                    height: showingContent ? 'auto' : '320px',
-                    minHeight: showingContent ? '400px' : '320px'
+                    height: showingContent ? 'auto' : '160px',
+                    minHeight: showingContent ? '220px' : '160px'
                   }}
                   transition={{ duration: 0.6, ease: "easeInOut" }}
                 >
@@ -240,18 +244,18 @@ export const PremiumSlotMachine = memo(function PremiumSlotMachine({
                           )}
                           
                           {/* Main result */}
-                          <div className="flex-1 flex items-center justify-center p-4 relative z-10">
+                          <div className="flex-1 flex items-center justify-center p-1 sm:p-2 md:p-4 relative z-10">
                             {showingContent ? (
                               /* Full card content display mode */
                               <motion.div
-                                className="p-6 text-center h-full flex flex-col justify-center"
+                                className="p-1 sm:p-2 md:p-4 lg:p-6 text-center h-full flex flex-col justify-center"
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 0.8 }}
                               >
                                 {/* Icon */}
                                 <motion.div 
-                                  className="text-5xl mb-4"
+                                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-1 sm:mb-2 md:mb-3 lg:mb-4"
                                   animate={{ scale: [1, 1.1, 1] }}
                                   transition={{ duration: 2, repeat: Infinity }}
                                 >
@@ -259,20 +263,20 @@ export const PremiumSlotMachine = memo(function PremiumSlotMachine({
                                 </motion.div>
                                 
                                 {/* Title */}
-                                <div className="text-white text-lg font-bold leading-tight mb-4">
+                                <div className="text-white text-xs sm:text-sm md:text-base lg:text-lg font-bold leading-tight mb-1 sm:mb-2 md:mb-3 lg:mb-4">
                                   {results[reelIndex]?.text || 'Benefit'}
                                 </div>
                                 
                                 {/* Full description */}
-                                <div className="text-[#A6B0BF] text-sm leading-relaxed">
+                                <div className="text-[#A6B0BF] text-xs leading-relaxed">
                                   {results[reelIndex]?.description || 'Learn more about this benefit'}
                                 </div>
                                 
                                 {/* Decorative divider */}
                                 <motion.div 
-                                  className="w-16 h-0.5 bg-[#00E28A] mx-auto mt-4 rounded-full"
+                                  className="w-8 sm:w-12 md:w-16 h-0.5 bg-[#00E28A] mx-auto mt-2 sm:mt-3 md:mt-4 rounded-full"
                                   initial={{ width: 0 }}
-                                  animate={{ width: 64 }}
+                                  animate={{ width: '100%' }}
                                   transition={{ delay: 0.5, duration: 0.8 }}
                                 />
                               </motion.div>
@@ -316,7 +320,7 @@ export const PremiumSlotMachine = memo(function PremiumSlotMachine({
                   )}
                   
                   {/* Reel number */}
-                  <div className="absolute top-2 left-2 w-6 h-6 bg-[#D9B45B] rounded-full flex items-center justify-center">
+                  <div className="absolute top-1 left-1 sm:top-2 sm:left-2 w-4 h-4 sm:w-6 sm:h-6 bg-[#D9B45B] rounded-full flex items-center justify-center">
                     <span className="text-black text-xs font-bold">{reelIndex + 1}</span>
                   </div>
                 </motion.div>
@@ -326,7 +330,7 @@ export const PremiumSlotMachine = memo(function PremiumSlotMachine({
         </div>
 
         {/* Control panel */}
-        <div className="bg-gradient-to-r from-[#12151B] to-[#1F2127] p-8 border-t-2 border-[#D9B45B]/50">
+        <div className="bg-gradient-to-r from-[#12151B] to-[#1F2127] p-4 sm:p-6 md:p-8 border-t-2 border-[#D9B45B]/50">
           <div className="flex justify-center">
             <motion.button
               onClick={onSpin}
@@ -335,7 +339,7 @@ export const PremiumSlotMachine = memo(function PremiumSlotMachine({
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <div className="px-12 py-6 bg-gradient-to-b from-[#D9B45B] to-[#B8860B] rounded-2xl border-2 border-[#FFD700] shadow-2xl relative overflow-hidden">
+              <div className="px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6 bg-gradient-to-b from-[#D9B45B] to-[#B8860B] rounded-xl sm:rounded-2xl border-2 border-[#FFD700] shadow-2xl relative overflow-hidden">
                 {/* Button shine effect */}
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
@@ -351,7 +355,7 @@ export const PremiumSlotMachine = memo(function PremiumSlotMachine({
                     <div className="w-8 h-8 text-black">🎰</div>
                   </motion.div>
                   
-                  <span className="text-black font-bold text-xl">
+                  <span className="text-black font-bold text-sm sm:text-lg md:text-xl">
                     {isSpinning ? "SPINNING..." : "SPIN TO WIN"}
                   </span>
                 </div>

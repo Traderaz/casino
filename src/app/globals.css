@@ -109,8 +109,8 @@ body {
 }
 
 .chip-pill {
-  height: 40px;
-  padding: 0 16px;
+  height: 36px;
+  padding: 0 12px;
   border-radius: 16px;
   background: 
     linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%),
@@ -119,8 +119,8 @@ body {
   backdrop-filter: blur(12px);
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-size: 13px;
+  gap: 8px;
+  font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -129,6 +129,15 @@ body {
   box-shadow: 
     0 4px 12px rgba(0, 0, 0, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 640px) {
+  .chip-pill {
+    height: 40px;
+    padding: 0 16px;
+    gap: 10px;
+    font-size: 13px;
+  }
 }
 
 .chip-pill:hover {
@@ -260,13 +269,36 @@ body {
 /* Mobile optimizations */
 @media (max-width: 768px) {
   .text-display-xl {
-    font-size: 2.5rem; /* 40px */
-    line-height: 3rem; /* 48px */
+    font-size: 2rem; /* 32px */
+    line-height: 2.5rem; /* 40px */
   }
   
   .text-display-lg {
-    font-size: 2rem; /* 32px */
-    line-height: 2.5rem; /* 40px */
+    font-size: 1.75rem; /* 28px */
+    line-height: 2.25rem; /* 36px */
+  }
+  
+  .text-display-md {
+    font-size: 1.25rem; /* 20px */
+    line-height: 1.5rem; /* 24px */
+  }
+}
+
+/* Extra small mobile optimizations */
+@media (max-width: 480px) {
+  .text-display-xl {
+    font-size: 1.75rem; /* 28px */
+    line-height: 2.25rem; /* 36px */
+  }
+  
+  .text-display-lg {
+    font-size: 1.5rem; /* 24px */
+    line-height: 1.875rem; /* 30px */
+  }
+  
+  .text-display-md {
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.375rem; /* 22px */
   }
 }
 

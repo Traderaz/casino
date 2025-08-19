@@ -41,13 +41,15 @@ export function Hero({ onJoinClick }: HeroProps) {
       <CasinoBackground variant="hero" opacity={0.20} />
 
       {/* Main content */}
-      <div className="relative z-10 text-center max-w-5xl mx-auto px-4">
+      <div className="relative z-10 text-center max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Vegas Style Sign */}
-        <VegasStyleSign />
+        <div className="px-2 sm:px-0">
+          <VegasStyleSign />
+        </div>
         
         {/* Main headline */}
         <motion.h1 
-          className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight mb-5 -mt-32"
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight mb-5 -mt-16 sm:-mt-24 md:-mt-32"
           style={{ fontFamily: 'var(--font-space-grotesk)' }}
           initial={{ opacity: 0, y: 8, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -63,7 +65,7 @@ export function Hero({ onJoinClick }: HeroProps) {
 
         {/* Subtitle */}
         <motion.p 
-          className="text-lg md:text-xl lg:text-2xl text-[#A6B0BF] mb-8 max-w-3xl mx-auto leading-relaxed"
+          className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#A6B0BF] mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-2"
           style={{ fontFamily: 'var(--font-inter)' }}
           initial={{ opacity: 0, y: 8, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -97,7 +99,7 @@ export function Hero({ onJoinClick }: HeroProps) {
 
         {/* Enhanced Trust strip */}
         <motion.div 
-          className="flex flex-wrap justify-center gap-4"
+          className="flex flex-wrap justify-center gap-2 sm:gap-4 px-4"
           initial={{ opacity: 0, y: 8, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1], delay: 0.8 }}

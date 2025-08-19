@@ -196,7 +196,7 @@ export function WhyItWorks() {
           
           {/* Status indicator */}
           <motion.div 
-            className="inline-flex items-center gap-4 px-6 py-3 rounded-full border-2 border-[#D9B45B]/30 bg-gradient-to-r from-[#D9B45B]/10 to-[#D9B45B]/5 backdrop-blur-sm"
+            className="inline-flex items-center gap-2 sm:gap-3 md:gap-4 px-3 sm:px-4 md:px-6 py-2 sm:py-3 rounded-full border-2 border-[#D9B45B]/30 bg-gradient-to-r from-[#D9B45B]/10 to-[#D9B45B]/5 backdrop-blur-sm"
             animate={{ 
               opacity: showJackpot ? [1, 0.7, 1] : 1,
               scale: showJackpot ? [1, 1.05, 1] : 1
@@ -210,13 +210,13 @@ export function WhyItWorks() {
               {isSpinning ? '🎰' : showJackpot ? '🏆' : showingContent ? '📚' : '🎲'}
             </div>
             <div className="text-center">
-              <div className="text-[#D9B45B] font-bold text-sm">
+              <div className="text-[#D9B45B] font-bold text-xs sm:text-sm">
                 {isSpinning ? 'SPINNING...' : 
                  showJackpot ? 'JACKPOT!' : 
                  showingContent ? 'LEARNING!' : 
                  'READY TO WIN'}
               </div>
-              <div className="text-[#A6B0BF] text-xs">
+              <div className="text-[#A6B0BF] text-xs hidden sm:block">
                 {isSpinning ? 'Reels in motion' : 
                  showJackpot ? 'Celebrating victory' : 
                  showingContent ? 'Showing benefits' : 
@@ -280,11 +280,11 @@ export function WhyItWorks() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.6 }}
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-6xl mx-auto px-4">
               {whyItWorksPoints.slice(0, 4).map((feature, i) => (
                 <motion.div
                   key={i}
-                  className="p-6 rounded-xl border border-[#D9B45B]/20 bg-gradient-to-b from-[#D9B45B]/5 to-transparent backdrop-blur-sm"
+                  className="p-4 sm:p-6 rounded-xl border border-[#D9B45B]/20 bg-gradient-to-b from-[#D9B45B]/5 to-transparent backdrop-blur-sm"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8 + (i * 0.1), duration: 0.4 }}
@@ -294,9 +294,9 @@ export function WhyItWorks() {
                     boxShadow: '0 8px 32px rgba(217, 180, 91, 0.2)'
                   }}
                 >
-                  <div className="text-4xl mb-4">{feature.icon}</div>
-                  <h3 className="text-[#E9EEF5] font-bold mb-2">{feature.title}</h3>
-                  <p className="text-[#A6B0BF] text-sm">{feature.description.split('.')[0] + '.'}</p>
+                  <div className="text-3xl sm:text-4xl mb-3 sm:mb-4">{feature.icon}</div>
+                  <h3 className="text-[#E9EEF5] font-bold text-sm sm:text-base mb-2">{feature.title}</h3>
+                  <p className="text-[#A6B0BF] text-xs sm:text-sm">{feature.description.split('.')[0] + '.'}</p>
                 </motion.div>
               ))}
             </div>

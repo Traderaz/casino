@@ -90,10 +90,10 @@ export function Features() {
             </p>
             
             {/* Deal Controls */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+            <div className="flex flex-col items-center justify-center gap-4 px-4">
               {/* Deal Status */}
               <motion.div 
-                className="inline-flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-2 sm:py-3 rounded-full border-2 border-[#D9B45B]/30 bg-gradient-to-r from-[#D9B45B]/10 to-[#D9B45B]/5 backdrop-blur-sm"
+                className="inline-flex items-center gap-2 sm:gap-3 md:gap-4 px-3 sm:px-4 md:px-6 py-2 sm:py-3 rounded-full border-2 border-[#D9B45B]/30 bg-gradient-to-r from-[#D9B45B]/10 to-[#D9B45B]/5 backdrop-blur-sm"
                 animate={{ 
                   opacity: isDealing ? [1, 0.7, 1] : 1,
                   scale: isDealing ? [1, 1.05, 1] : 1
@@ -110,7 +110,7 @@ export function Features() {
                   <div className="text-[#D9B45B] font-bold text-xs sm:text-sm">
                     {isDealing ? 'DEALING...' : 'READY TO DEAL'}
                   </div>
-                  <div className="text-[#A6B0BF] text-xs">
+                  <div className="text-[#A6B0BF] text-xs hidden sm:block">
                     {isDealing ? 'Cards in motion' : 'Discover innovations'}
                   </div>
                 </div>
@@ -122,7 +122,7 @@ export function Features() {
               <motion.button
                 onClick={handleDeal}
                 disabled={isDealing}
-                className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-[#D9B45B] to-[#B8860B] rounded-xl sm:rounded-2xl text-black font-bold text-base sm:text-lg shadow-2xl relative overflow-hidden"
+                className="px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 bg-gradient-to-r from-[#D9B45B] to-[#B8860B] rounded-lg sm:rounded-xl md:rounded-2xl text-black font-bold text-sm sm:text-base md:text-lg shadow-2xl relative overflow-hidden"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -133,14 +133,14 @@ export function Features() {
                   transition={{ duration: 1.5, repeat: isDealing ? Infinity : 0 }}
                 />
                 
-                <div className="relative flex items-center gap-3">
+                <div className="relative flex items-center gap-2 sm:gap-3">
                   <motion.div
                     animate={{ rotate: isDealing ? 360 : 0 }}
                     transition={{ duration: 0.5, repeat: isDealing ? Infinity : 0, ease: "linear" }}
                   >
                     🃏
                   </motion.div>
-                  <span>{isDealing ? "DEALING..." : "DEAL THE CARDS"}</span>
+                  <span className="whitespace-nowrap">{isDealing ? "DEALING..." : "DEAL THE CARDS"}</span>
                 </div>
               </motion.button>
             </div>

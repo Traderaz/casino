@@ -15,8 +15,7 @@ export function VegasStyleSign() {
 
   return (
     <motion.div
-      className="relative mx-auto mb-4"
-      style={{ width: '1050px', height: '600px' }}
+      className="relative mx-auto mb-4 w-[95vw] max-w-[450px] h-[260px] sm:w-[600px] sm:h-[343px] md:w-[800px] md:h-[457px] lg:w-[1050px] lg:h-[600px]"
       initial={{ opacity: 0, scale: 0.95, y: -10 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -26,7 +25,7 @@ export function VegasStyleSign() {
         
         {/* Main Vegas Sign Image */}
         <motion.div
-          className="relative w-full h-[480px]"
+          className="relative w-full h-[80%]"
           animate={{
             filter: [
               'drop-shadow(0 0 30px rgba(255, 215, 0, 0.4))',
@@ -44,7 +43,7 @@ export function VegasStyleSign() {
             src="/lossless casino.png"
             alt="Welcome to Lossless Casino"
             fill
-            sizes="1050px"
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 600px, (max-width: 1024px) 800px, 1050px"
             priority
             className="object-contain"
             style={{
@@ -57,9 +56,9 @@ export function VegasStyleSign() {
 
         {/* Premium bottom accent bar - in front of sign */}
         <motion.div
-          className="absolute left-1/2 transform -translate-x-1/2 w-[600px] h-2 rounded-full z-20"
+          className="absolute left-1/2 transform -translate-x-1/2 w-[60%] h-1 sm:h-1.5 md:h-2 rounded-full z-20"
           style={{
-            bottom: '180px',
+            bottom: '30%',
             background: 'linear-gradient(90deg, transparent 0%, rgba(255, 215, 0, 0.8) 20%, rgba(255, 215, 0, 1) 50%, rgba(255, 215, 0, 0.8) 80%, transparent 100%)',
             boxShadow: '0 0 35px rgba(255, 215, 0, 0.7), 0 -12px 35px rgba(255, 215, 0, 0.5)'
           }}

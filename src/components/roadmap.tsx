@@ -175,76 +175,88 @@ export function Roadmap() {
               </motion.div>
             </div>
 
-            {/* Mobile poker layout */}
-            <div className="lg:hidden space-y-12">
-              {content.roadmap.phases.map((phase, index) => {
-                const card = pokerCards[index as keyof typeof pokerCards];
-                const isRevealed = revealedCards.includes(index);
-                
-                return (
-                  <motion.div
-                    key={index}
-                    className="flex flex-col items-center"
-                    initial={{ opacity: 0, y: 20, rotateY: -90 }}
-                    whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
-                    viewport={{ once: true, margin: "-50px" }}
-                    transition={{ 
-                      duration: 0.6, 
-                      ease: [0.16, 1, 0.3, 1],
-                      delay: index * 0.15
-                    }}
-                  >
-                    <PremiumPlayingCard
-                      suit={card.suit}
-                      rank={card.rank}
-                      isRevealed={isRevealed}
-                      onClick={() => handleCardClick(index)}
-                      size="medium"
-                      title={phase.title}
-                      description={phase.description}
-                      status={phase.status as 'active' | 'upcoming' | 'future'}
-                    />
-                    
-                    {/* Phase info below card */}
-                    <motion.div 
-                      className="mt-4 text-center"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: isRevealed ? 1 : 0.8 }}
-                      transition={{ duration: 0.3 }}
+            {/* Mobile poker layout - 2x2 grid */}
+            <div className="lg:hidden px-2">
+              <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
+                {content.roadmap.phases.map((phase, index) => {
+                  const card = pokerCards[index as keyof typeof pokerCards];
+                  const isRevealed = revealedCards.includes(index);
+                  
+                  return (
+                    <motion.div
+                      key={index}
+                      className="flex flex-col items-center"
+                      initial={{ opacity: 0, y: 20, rotateY: -90 }}
+                      whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ 
+                        duration: 0.6, 
+                        ease: [0.16, 1, 0.3, 1],
+                        delay: index * 0.15
+                      }}
                     >
-                      <div className="flex flex-col gap-2">
-                        <div 
-                          className="text-xs font-bold px-4 py-2 rounded-full border-2 backdrop-blur-sm"
-                          style={{ 
-                            color: statusColors[phase.status as keyof typeof statusColors],
-                            borderColor: statusColors[phase.status as keyof typeof statusColors],
-                            backgroundColor: `${statusColors[phase.status as keyof typeof statusColors]}15`,
-                            textShadow: `0 0 8px ${statusColors[phase.status as keyof typeof statusColors]}88`
-                          }}
-                        >
-                          {phase.phase} • {phase.timeline}
+                      <PremiumPlayingCard
+                        suit={card.suit}
+                        rank={card.rank}
+                        isRevealed={isRevealed}
+                        onClick={() => handleCardClick(index)}
+                        size="small"
+                        title={phase.title}
+                        description={phase.description}
+                        status={phase.status as 'active' | 'upcoming' | 'future'}
+                      />
+                      
+                      {/* Phase info below card */}
+                      <motion.div 
+                        className="mt-2 text-center"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: isRevealed ? 1 : 0.8 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="flex flex-col gap-1">
+                          <div 
+                            className="text-xs font-bold px-2 py-1 rounded-full border-2 backdrop-blur-sm"
+                            style={{ 
+                              color: statusColors[phase.status as keyof typeof statusColors],
+                              borderColor: statusColors[phase.status as keyof typeof statusColors],
+                              backgroundColor: `${statusColors[phase.status as keyof typeof statusColors]}15`,
+                              textShadow: `0 0 8px ${statusColors[phase.status as keyof typeof statusColors]}88`
+                            }}
+                          >
+                            {phase.phase}
+                          </div>
+                          <div 
+                            className="text-xs font-medium px-2 py-0.5 rounded-full border backdrop-blur-sm"
+                            style={{ 
+                              color: statusColors[phase.status as keyof typeof statusColors],
+                              borderColor: `${statusColors[phase.status as keyof typeof statusColors]}50`,
+                              backgroundColor: `${statusColors[phase.status as keyof typeof statusColors]}10`,
+                            }}
+                          >
+                            {phase.timeline}
+                          </div>
                         </div>
-                      </div>
+                      </motion.div>
                     </motion.div>
-                  </motion.div>
-                );
-              })}
+                  );
+                })}
+              </div>
               
               {/* Mobile hand strength indicator */}
               <motion.div 
-                className="text-center mt-8"
+                className="text-center mt-6"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.8, duration: 0.6 }}
               >
-                <div className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl border-2 border-[#D9B45B] bg-gradient-to-r from-[#D9B45B]/20 to-[#D9B45B]/10 backdrop-blur-sm">
-                  <div className="text-2xl">👑</div>
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border-2 border-[#D9B45B] bg-gradient-to-r from-[#D9B45B]/20 to-[#D9B45B]/10 backdrop-blur-sm">
+                  <div className="text-xl">👑</div>
                   <div>
-                    <div className="text-[#D9B45B] font-bold">ROYAL FLUSH</div>
+                    <div className="text-[#D9B45B] font-bold text-sm">ROYAL FLUSH</div>
                     <div className="text-[#A6B0BF] text-xs">Ultimate Experience</div>
                   </div>
-                  <div className="text-2xl">👑</div>
+                  <div className="text-xl">👑</div>
                 </div>
               </motion.div>
             </div>

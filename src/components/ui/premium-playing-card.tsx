@@ -29,9 +29,9 @@ const statusColors = {
 };
 
 const sizeConfigs = {
-  small: { width: 80, height: 112 },
-  medium: { width: 120, height: 168 },
-  large: { width: 160, height: 224 }
+  small: { width: 126, height: 198 },
+  medium: { width: 90, height: 126 },
+  large: { width: 156, height: 218 }
 };
 
 export const PremiumPlayingCard = memo(function PremiumPlayingCard({
@@ -82,15 +82,15 @@ export const PremiumPlayingCard = memo(function PremiumPlayingCard({
           }}
         >
           {/* Ornate back pattern */}
-          <div className="absolute inset-4 rounded-lg border border-[#D9B45B]/30 flex items-center justify-center">
-            <div className="text-6xl text-[#D9B45B]/40 font-bold">🎰</div>
+          <div className="absolute inset-2 sm:inset-3 md:inset-4 rounded-lg border border-[#D9B45B]/30 flex items-center justify-center">
+            <div className="text-2xl sm:text-4xl md:text-6xl text-[#D9B45B]/40 font-bold">🎰</div>
           </div>
           
           {/* Corner decorations */}
-          <div className="absolute top-2 left-2 w-4 h-4 border-l-2 border-t-2 border-[#D9B45B]/50 rounded-tl-lg" />
-          <div className="absolute top-2 right-2 w-4 h-4 border-r-2 border-t-2 border-[#D9B45B]/50 rounded-tr-lg" />
-          <div className="absolute bottom-2 left-2 w-4 h-4 border-l-2 border-b-2 border-[#D9B45B]/50 rounded-bl-lg" />
-          <div className="absolute bottom-2 right-2 w-4 h-4 border-r-2 border-b-2 border-[#D9B45B]/50 rounded-br-lg" />
+          <div className="absolute top-1 left-1 sm:top-2 sm:left-2 w-2 h-2 sm:w-4 sm:h-4 border-l-2 border-t-2 border-[#D9B45B]/50 rounded-tl-lg" />
+          <div className="absolute top-1 right-1 sm:top-2 sm:right-2 w-2 h-2 sm:w-4 sm:h-4 border-r-2 border-t-2 border-[#D9B45B]/50 rounded-tr-lg" />
+          <div className="absolute bottom-1 left-1 sm:bottom-2 sm:left-2 w-2 h-2 sm:w-4 sm:h-4 border-l-2 border-b-2 border-[#D9B45B]/50 rounded-bl-lg" />
+          <div className="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 w-2 h-2 sm:w-4 sm:h-4 border-r-2 border-b-2 border-[#D9B45B]/50 rounded-br-lg" />
         </motion.div>
 
         {/* Card Front */}
@@ -115,17 +115,17 @@ export const PremiumPlayingCard = memo(function PremiumPlayingCard({
           }}
         >
           {/* Playing card layout */}
-          <div className="relative w-full h-full p-3">
+          <div className="relative w-full h-full p-1 sm:p-2 md:p-3">
             {/* Top left rank and suit */}
-            <div className="absolute top-2 left-2 flex flex-col items-center leading-none">
+            <div className="absolute top-1 left-1 sm:top-2 sm:left-2 flex flex-col items-center leading-none">
               <div 
-                className="text-lg font-bold"
+                className="text-xs sm:text-sm md:text-lg font-bold"
                 style={{ color: suitColor === '#E9EEF5' ? '#1F2937' : suitColor }}
               >
                 {rank}
               </div>
               <div 
-                className="text-lg"
+                className="text-xs sm:text-sm md:text-lg"
                 style={{ color: suitColor === '#E9EEF5' ? '#1F2937' : suitColor }}
               >
                 {suit}
@@ -133,15 +133,15 @@ export const PremiumPlayingCard = memo(function PremiumPlayingCard({
             </div>
 
             {/* Bottom right rank and suit (rotated) */}
-            <div className="absolute bottom-2 right-2 flex flex-col items-center leading-none transform rotate-180">
+            <div className="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 flex flex-col items-center leading-none transform rotate-180">
               <div 
-                className="text-lg font-bold"
+                className="text-xs sm:text-sm md:text-lg font-bold"
                 style={{ color: suitColor === '#E9EEF5' ? '#1F2937' : suitColor }}
               >
                 {rank}
               </div>
               <div 
-                className="text-lg"
+                className="text-xs sm:text-sm md:text-lg"
                 style={{ color: suitColor === '#E9EEF5' ? '#1F2937' : suitColor }}
               >
                 {suit}
@@ -149,10 +149,10 @@ export const PremiumPlayingCard = memo(function PremiumPlayingCard({
             </div>
 
             {/* Center content area */}
-            <div className="absolute inset-6 flex flex-col items-center justify-center text-center">
+            <div className="absolute inset-2 sm:inset-3 md:inset-4 lg:inset-6 flex flex-col items-center justify-center text-center">
               {/* Large center suit */}
               <div 
-                className="text-4xl mb-2"
+                className="text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-1 sm:mb-2"
                 style={{ color: suitColor === '#E9EEF5' ? '#1F2937' : suitColor }}
               >
                 {suit}
@@ -160,8 +160,8 @@ export const PremiumPlayingCard = memo(function PremiumPlayingCard({
 
               {/* Phase content */}
               {title && (
-                <div className="space-y-2">
-                  <h3 className="text-sm font-bold text-gray-800 leading-tight">
+                <div className="space-y-1 sm:space-y-2">
+                  <h3 className="text-xs sm:text-sm font-bold text-gray-800 leading-tight">
                     {title}
                   </h3>
                   {description && (
@@ -175,13 +175,13 @@ export const PremiumPlayingCard = memo(function PremiumPlayingCard({
 
             {/* Status indicator */}
             <div 
-              className="absolute -top-2 -right-2 w-6 h-6 rounded-full border-2 border-white flex items-center justify-center z-20"
+              className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-4 h-4 sm:w-6 sm:h-6 rounded-full border-2 border-white flex items-center justify-center z-20"
               style={{ 
                 backgroundColor: statusColor,
                 boxShadow: `0 2px 8px ${statusColor}66`
               }}
             >
-              <div className="w-2 h-2 rounded-full bg-white" />
+              <div className="w-1 h-1 sm:w-2 sm:h-2 rounded-full bg-white" />
             </div>
           </div>
         </motion.div>
@@ -191,7 +191,7 @@ export const PremiumPlayingCard = memo(function PremiumPlayingCard({
       {status === 'active' && (
         <>
           <motion.div
-            className="absolute -top-4 -left-4 w-8 h-8"
+            className="absolute -top-2 -left-2 sm:-top-4 sm:-left-4 w-4 h-4 sm:w-8 sm:h-8"
             animate={{ 
               rotate: [0, 360],
               y: [-2, 2, -2]
@@ -202,7 +202,7 @@ export const PremiumPlayingCard = memo(function PremiumPlayingCard({
             }}
           >
             <div 
-              className="w-8 h-8 rounded-full border-2"
+              className="w-4 h-4 sm:w-8 sm:h-8 rounded-full border-2"
               style={{
                 background: `radial-gradient(circle at 30% 30%, ${statusColor}80, ${statusColor}40)`,
                 borderColor: statusColor,
@@ -212,7 +212,7 @@ export const PremiumPlayingCard = memo(function PremiumPlayingCard({
           </motion.div>
           
           <motion.div
-            className="absolute -bottom-4 -right-4 w-6 h-6"
+            className="absolute -bottom-2 -right-2 sm:-bottom-4 sm:-right-4 w-3 h-3 sm:w-6 sm:h-6"
             animate={{ 
               rotate: [360, 0],
               y: [2, -2, 2]
@@ -223,7 +223,7 @@ export const PremiumPlayingCard = memo(function PremiumPlayingCard({
             }}
           >
             <div 
-              className="w-6 h-6 rounded-full border-2"
+              className="w-3 h-3 sm:w-6 sm:h-6 rounded-full border-2"
               style={{
                 background: `radial-gradient(circle at 30% 30%, ${statusColor}80, ${statusColor}40)`,
                 borderColor: statusColor,
